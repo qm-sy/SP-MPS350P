@@ -1,0 +1,87 @@
+{
+    "configurations": [
+        {
+            "name": "Target 1",
+            "includePath": [
+                "e:\\workspace\\KP_350_POWER\\BSP\\Inc",
+                "e:\\workspace\\KP_350_POWER\\Core\\Inc",
+                "e:\\workspace\\KP_350_POWER\\Driver",
+                "e:\\workspace\\KP_350_POWER\\Emembed\\Inc",
+                "e:\\workspace\\KP_350_POWER\\SYSTEM\\Inc",
+                "D:\\APP\\Keil_STM32\\C51\\INC",
+                "e:\\workspace\\KP_350_POWER\\Project",
+                "e:\\workspace\\KP_350_POWER\\SYSTEM\\Src",
+                "e:\\workspace\\KP_350_POWER\\Core\\Src",
+                "e:\\workspace\\KP_350_POWER\\BSP\\Src",
+                "e:\\workspace\\KP_350_POWER\\Emembed\\Src"
+            ],
+            "defines": [
+                "__C51__",
+                "__VSCODE_C51__",
+                "reentrant=",
+                "compact=",
+                "small=",
+                "large=",
+                "data=",
+                "idata=",
+                "pdata=",
+                "bdata=",
+                "xdata=",
+                "code=",
+                "bit=char",
+                "sbit=char",
+                "sfr=char",
+                "sfr16=int",
+                "sfr32=int",
+                "interrupt=",
+                "using=",
+                "_at_=",
+                "_priority_=",
+                "_task_="
+            ],
+            "intelliSenseMode": "${default}"
+        },
+        {
+            "name": "MultiFunPower",
+            "includePath": [
+                "d:\\test\\MultiFunPower\\BSP\\Inc",
+                "d:\\test\\MultiFunPower\\Core\\Inc",
+                "d:\\test\\MultiFunPower\\Driver",
+                "d:\\test\\MultiFunPower\\Emembed\\Inc",
+                "d:\\test\\MultiFunPower\\SYSTEM\\Inc",
+                "D:\\APP\\Keil_v5\\C51\\INC",
+                "d:\\test\\MultiFunPower\\Project",
+                "d:\\test\\MultiFunPower\\SYSTEM\\Src",
+                "d:\\test\\MultiFunPower\\Core\\Src",
+                "d:\\test\\MultiFunPower\\BSP\\Src",
+                "d:\\test\\MultiFunPower\\Emembed\\Src"
+            ],
+            "defines": [
+                "__C51__",
+                "__VSCODE_C51__",
+                "reentrant=",
+                "compact=",
+                "small=",
+                "large=",
+                "data=",
+                "idata=",
+                "pdata=",
+                "bdata=",
+                "xdata=",
+                "code=",
+                "bit=char",
+                "sbit=char",
+                "sfr=char",
+                "sfr16=int",
+                "sfr32=int",
+                "interrupt=",
+                "using=",
+                "_at_=",
+                "_priority_=",
+                "_task_="
+            ],
+            "intelliSenseMode": "${default}"
+        }
+    ],
+    "version": 4
+}

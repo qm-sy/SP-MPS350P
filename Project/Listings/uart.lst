@@ -1,0 +1,76 @@
+C51 COMPILER V9.60.7.0   UART                                                              02/13/2025 13:47:50 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN ..\Output\uart.obj
+COMPILER INVOKED BY: D:\APP\Keil_v5\C51\BIN\C51.EXE ..\Core\Src\uart.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\BSP\Inc;
+                    -..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\uart.lst) OBJECT(..\Output\uart.
+                    -obj)
+
+line level    source
+
+   1          #include "uart.h"
+   2          
+   3          /**
+   4           * @brief       串口2初始化函数--tim2
+   5           *
+   6           * @param   
+   7           *
+   8           * @return  void
+   9          **/
+  10          void Uart2_Init( void )       //115200bps@11.0592MHz
+  11          {
+  12   1          P_SW2 |= 0X00;          //串口2功能脚选择P1.0 P1.1
+  13   1      
+  14   1              S2CON  = 0x50;           //8位数据,可变波特率
+  15   1      
+  16   1              AUXR  |= 0x04;           //定时器时钟1T模式
+  17   1      
+  18   1              T2L    = 0xE8;           //设置定时初始值
+  19   1              T2H    = 0xFF;           //设置定时初始值
+  20   1      
+  21   1              AUXR  |= 0x10;           //定时器2开始计时
+  22   1      
+  23   1              IE2   |= 0X01;                  //串口2 中断允许位
+  24   1      }
+  25          
+  26          
+  27          /**
+  28           * @brief       串口3初始化函数--tim3
+  29           *
+  30           * @param   
+  31           *
+  32           * @return  void
+  33          **/
+  34          void Uart3_Init( void ) //115200bps@11.0592MHz
+  35          {
+  36   1              P_SW2 |= 0X00;          //串口3功能脚选择P0.0 P0.1
+  37   1              
+  38   1              S3CON  = 0x10;          //8位数据,可变波特率
+  39   1              S3CON |= 0x40;          //串口3选择定时器3为波特率发生器
+  40   1      
+  41   1              T4T3M |= 0x02;          //定时器时钟1T模式
+  42   1      
+  43   1              T3L = 0xE8;                     //设置定时初始值
+  44   1              T3H = 0xFF;                     //设置定时初始值
+  45   1      
+  46   1              T4T3M |= 0x08;          //定时器3开始计时
+  47   1      
+  48   1              IE2   |= 0x08;          // 串口3中断打开  
+  49   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     41    ----
+C51 COMPILER V9.60.7.0   UART                                                              02/13/2025 13:47:50 PAGE 2   
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

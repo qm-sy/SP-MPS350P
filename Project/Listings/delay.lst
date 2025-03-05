@@ -1,0 +1,69 @@
+C51 COMPILER V9.60.7.0   DELAY                                                             02/13/2025 13:47:49 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE DELAY
+OBJECT MODULE PLACED IN ..\Output\delay.obj
+COMPILER INVOKED BY: D:\APP\Keil_v5\C51\BIN\C51.EXE ..\SYSTEM\Src\delay.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\BSP\I
+                    -nc;..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\delay.lst) OBJECT(..\Output\d
+                    -elay.obj)
+
+line level    source
+
+   1          #include "delay.h"
+   2          
+   3          /**
+   4           * @brief       ms 延时函数
+   5           *
+   6           * @param   void
+   7           *
+   8           * @return  
+   9           */
+  10          void delay_ms(uint16_t time)    //@11.0592MHz
+  11          {
+  12   1              unsigned char data i, j;
+  13   1          for(time;time>0;time--)
+  14   1          {
+  15   2              _nop_();
+  16   2              _nop_();
+  17   2              _nop_();
+  18   2              i = 11;
+  19   2              j = 190;
+  20   2              do
+  21   2              {
+  22   3                  while (--j);
+  23   3              } while (--i);
+  24   2          }
+  25   1      }
+  26          
+  27          /**
+  28           * @brief       us 延时函数
+  29           *
+  30           * @param   void
+  31           *
+  32           * @return  
+  33           */
+  34          void delay_us(uint16_t time)    //@11.0592MHz
+  35          {
+  36   1         for(;time>0;time--)
+  37   1         {
+  38   2             _nop_();
+  39   2             _nop_();
+  40   2             _nop_();
+  41   2         }
+  42   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     52    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.60.7.0   DELAY                                                             02/13/2025 13:47:49 PAGE 2   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

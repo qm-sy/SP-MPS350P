@@ -1,0 +1,73 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              02/13/2025 13:47:50 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN ..\Output\main.obj
+COMPILER INVOKED BY: D:\APP\Keil_v5\C51\BIN\C51.EXE ..\Core\Src\main.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\BSP\Inc;
+                    -..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\main.lst) OBJECT(..\Output\main.
+                    -obj)
+
+line level    source
+
+   1          #include "main.h"
+   2          
+   3          void main( void )
+   4          {
+   5   1          P_SW2 |= 0x80;
+   6   1          
+   7   1          GPIO_Init();
+   8   1      
+   9   1          /*  调试使用 printf  */
+  10   1          Uart3_Init();
+  11   1          
+  12   1          /*  温度控制  */
+  13   1          ADC_Init();
+  14   1          temp.temp_scan_allow_flag = 1;
+  15   1      
+  16   1          /*  485控制  */
+  17   1          Uart2_Init();
+  18   1          Uart2_Send_Statu_Init();
+  19   1          Timer0_Init();
+  20   1      
+  21   1          /*  4路220输出控制  */
+  22   1          Power_Statu_Init();
+  23   1          INT2_Init();
+  24   1          Timer1_Init();
+  25   1          Timer4_Init();
+  26   1          
+  27   1      
+  28   1          /*  PWM控制  */
+  29   1          PWM_Init();
+  30   1      
+  31   1          EA = 1;
+  32   1      
+  33   1          eeprom_statu_judge();
+  34   1          A1_DHT11 = 1;
+  35   1          printf("========== code start ========== \r\n");
+  36   1          //printf("========== code start ========== \r\n");
+  37   1          
+  38   1          while (1)
+  39   1          {
+  40   2              Modbus_Event();
+  41   2              temp_scan();
+  42   2              //  DHT11_TEST();
+  43   2              // delay_ms(1000);
+  44   2              //slave_scan();
+  45   2          }  
+  46   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     66    ----
+   CONSTANT SIZE    =     36    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.7.0   MAIN                                                              02/13/2025 13:47:50 PAGE 2   
+
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

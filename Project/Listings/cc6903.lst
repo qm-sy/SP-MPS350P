@@ -1,0 +1,71 @@
+C51 COMPILER V9.60.7.0   CC6903                                                            02/13/2025 13:47:50 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE CC6903
+OBJECT MODULE PLACED IN ..\Output\cc6903.obj
+COMPILER INVOKED BY: D:\APP\Keil_v5\C51\BIN\C51.EXE ..\BSP\Src\cc6903.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\BSP\Inc
+                    -;..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\cc6903.lst) OBJECT(..\Output\cc
+                    -6903.obj)
+
+line level    source
+
+   1          #include "cc6903.h"
+   2          
+   3          /**
+   4           * @brief       获取电流值
+   5           *
+   6           * @param   channel_x：电流通道1~3
+   7           *
+   8           * @return  current 
+   9          **/
+  10          uint16_t get_current( uint8_t channel_x)
+  11          {
+  12   1          uint16_t current;
+  13   1          uint16_t adc_val = 0;
+  14   1          uint8_t t;
+  15   1      
+  16   1          /* 1, 取10次adc_val                           */
+  17   1          for( t = 0; t < 10; t++ )
+  18   1          {
+  19   2              adc_val += Get_ADC_12bit(channel_x);
+  20   2          }
+  21   1          adc_val = adc_val/10;
+  22   1          //printf("The  value of adc_val is %d \r\n",(int)adc_val);
+  23   1          /* 2, 先取余，四舍五入，后对36取整            */
+  24   1          if( adc_val < 1360 )
+  25   1          {
+  26   2              adc_val = 1360;
+  27   2          }
+  28   1          current = (adc_val - 1360) % 36;
+  29   1          if( current >= 18 )
+  30   1          {
+  31   2              current  = 1;
+  32   2          }else
+  33   1          {
+  34   2              current = 0;
+  35   2          }
+  36   1          current = (adc_val - 1360) / 36 + current;
+  37   1      
+  38   1          if( current > 30 )
+  39   1          {
+  40   2              current = 30;
+  41   2          }
+  42   1          //printf("The value of current is %d \r\n ",current);
+  43   1          return current;
+  44   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    173    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       4
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.7.0   CC6903                                                            02/13/2025 13:47:50 PAGE 2   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

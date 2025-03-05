@@ -1,0 +1,76 @@
+C51 COMPILER V9.60.7.0   PWM_CRL                                                           02/03/2025 00:11:47 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE PWM_CRL
+OBJECT MODULE PLACED IN ..\Output\pwm_crl.obj
+COMPILER INVOKED BY: D:\APP\Keil_STM32\C51\BIN\C51.EXE ..\BSP\Src\pwm_crl.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\BSP
+                    -\Inc;..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\pwm_crl.lst) OBJECT(..\Outp
+                    -ut\pwm_crl.obj)
+
+line level    source
+
+   1          #include "pwm_crl.h"
+   2          
+   3          // /**
+   4          //  * @brief    通过调节PWM占空比实现对应的风力大小
+   5          //  *
+   6          //  * @param   channel_num：pwm通道
+   7          //  * @param   wind_num：风力大小
+   8          //  *
+   9          //  * @return  void
+  10          // **/
+  11          // void PWM_Crl( uint8_t pwm_channel, uint8_t wind_level )
+  12          // {
+  13          //     if(( wind_level >=0 ) && ( wind_level <= 6 ))
+  14          //     {
+  15          //         switch(pwm_channel)
+  16          //         {
+  17          //             case PWMx_7:
+  18          //                 PWMB_CCR7 = 184 * wind_level;
+  19          //                 PWM_Start(7);
+  20          //                 break;
+  21          //             case PWMx_8:
+  22          //                 PWMB_CCR8 = 184 * wind_level;
+  23          //                 PWM_Start(8);
+  24          //                 break;      
+  25          //             default:
+  26          //                 break;                          
+  27          //         }
+  28          //     }
+  29          // }
+  30          
+  31          // void pwm_test( void )
+  32          // {
+  33              
+  34          //     // delay_ms(2000);
+  35          //     // PWM_Crl(7,2);
+  36          //     // delay_ms(2000);
+  37          //     // PWM_Crl(7,3);
+  38          //     // delay_ms(2000);
+  39          //     // PWM_Crl(7,4);
+  40          //     // delay_ms(2000);
+  41          //     // PWM_Crl(7,5);
+  42          //     // delay_ms(2000);
+  43          //     // PWM_Crl(7,6);
+  44          //     // delay_ms(2000);
+  45          //     PWM_Close(7);
+  46          //     delay_ms(2000);
+  47          //     PWM_Start(7);
+  48          //     delay_ms(5000);
+  49          // }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+C51 COMPILER V9.60.7.0   PWM_CRL                                                           02/03/2025 00:11:47 PAGE 2   
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
