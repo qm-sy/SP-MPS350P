@@ -1,12 +1,12 @@
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    03/05/2025  17:25:08  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    03/05/2025  17:26:01  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
 D:\APP\KEIL_V5\C51\BIN\BL51.EXE ..\Output\STARTUP.obj, ..\Output\delay.obj, ..\Output\adc.obj, ..\Output\gpio.obj, ..\Ou
 >> tput\main.obj, ..\Output\pwm.obj, ..\Output\tim.obj, ..\Output\uart.obj, ..\Output\eeprom.obj, ..\Output\ntc.obj, ..\
 >> Output\power_crl.obj, ..\Output\cc6903.obj, ..\Output\communication.obj, ..\Output\eeprom_crl.obj, ..\Output\dht11.ob
->> j, ..\Output\modbus_rtu.obj, ..\Output\common.obj TO ..\Output\KP_MultiFunPower_V001 PRINT (.\Listings\KP_MultiFunPow
->> er_V001.m51) RAMSIZE (256)
+>> j, ..\Output\modbus_rtu.obj, ..\Output\common.obj TO ..\Output\SP-MPS350P PRINT (.\Listings\SP-MPS350P.m51) RAMSIZE (
+>> 256)
 
 
 MEMORY MODEL: LARGE
@@ -47,7 +47,7 @@ INPUT MODULES INCLUDED:
   D:\APP\KEIL_V5\C51\LIB\C51L.LIB (?C?CCASE)
 
 
-LINK MAP OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
+LINK MAP OF MODULE:  ..\Output\SP-MPS350P (?C_STARTUP)
 
 
             TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
@@ -59,7 +59,7 @@ LINK MAP OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
                     000DH     0013H                  *** GAP ***
             BIT     0020H.0   0001H.1   UNIT         _BIT_GROUP_
                     0021H.1   0000H.7                *** GAP ***
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 2
 
 
             IDATA   0022H     0001H     UNIT         ?STACK
@@ -119,7 +119,7 @@ LINK MAP OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
             CODE    1423H     005EH     UNIT         ?PR?TIM4_ISR?COMMON
             CODE    1481H     0056H     UNIT         ?PR?EEPROM_DATA_RECORD?EEPROM_CRL
             CODE    14D7H     0044H     UNIT         ?C?LDIV
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 3
 
 
             CODE    151BH     0043H     UNIT         ?PR?PWM_INIT?PWM
@@ -150,7 +150,7 @@ LINK MAP OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
 
 
 
-OVERLAY MAP OF MODULE:   ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
+OVERLAY MAP OF MODULE:   ..\Output\SP-MPS350P (?C_STARTUP)
 
 
 SEGMENT                                            BIT_GROUP          DATA_GROUP          XDATA_GROUP
@@ -179,7 +179,7 @@ SEGMENT                                            BIT_GROUP          DATA_GROUP
   +--> ?PR?TEMP_SCAN?NTC
 
 ?PR?ADC_INIT?ADC                                -----    -----      -----    -----      -----    -----
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 4
 
 
   +--> ?PR?_DELAY_MS?DELAY
@@ -239,7 +239,7 @@ SEGMENT                                            BIT_GROUP          DATA_GROUP
 ?PR?_GET_TEMP?NTC                               -----    -----      -----    -----      0210H    0004H
   +--> ?PR?_GET_ADC_12BIT?ADC
   +--> ?PR?_LOOKUPTABLE?NTC
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 5
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 5
 
 
 
@@ -266,7 +266,7 @@ SEGMENT                                            BIT_GROUP          DATA_GROUP
 
 
 
-SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
+SYMBOL TABLE OF MODULE:  ..\Output\SP-MPS350P (?C_STARTUP)
 
   VALUE           TYPE          NAME
   ----------------------------------
@@ -299,7 +299,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:0000H         LINE#         126
   C:1000H         LINE#         133
   C:1002H         LINE#         134
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 6
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 6
 
 
   C:1003H         LINE#         135
@@ -359,7 +359,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:00A1H         LINE#         42
   -------         ENDPROC       _DELAY_US
   -------         ENDMOD        DELAY
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 7
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 7
 
 
 
@@ -419,7 +419,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0093H         PUBLIC        P0M1
   D:0092H         PUBLIC        P1M0
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 8
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 8
 
 
   D:0096H         PUBLIC        P2M0
@@ -479,7 +479,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
   D:00D0H         PUBLIC        PSW
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 9
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 9
 
 
   -------         PROC          MAIN
@@ -539,7 +539,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:1536H         LINE#         26
   C:1540H         LINE#         28
   C:1549H         LINE#         33
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 10
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 10
 
 
   C:1550H         LINE#         35
@@ -599,7 +599,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   -------         ENDPROC       TIMER0_INIT
   -------         PROC          TIMER1_INIT
   C:1849H         LINE#         41
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 11
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 11
 
 
   C:1849H         LINE#         42
@@ -659,7 +659,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:182AH         LINE#         23
   C:182DH         LINE#         24
   -------         ENDPROC       UART2_INIT
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 12
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 12
 
 
   -------         PROC          UART3_INIT
@@ -719,7 +719,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:17A6H         LINE#         40
   C:17A6H         LINE#         41
   C:17A9H         LINE#         43
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 13
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 13
 
 
   C:17ACH         LINE#         45
@@ -779,7 +779,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   D:00A8H         PUBLIC        IE
   D:00B8H         PUBLIC        IP
   D:0098H         PUBLIC        SCON
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 14
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 14
 
 
   D:0088H         PUBLIC        TCON
@@ -839,7 +839,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:12ADH         LINE#         103
   C:12B5H         LINE#         104
   C:12B5H         LINE#         105
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 15
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 15
 
 
   C:12C2H         LINE#         106
@@ -899,7 +899,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:0056H         PUBLIC        INT2_ISR
   D:00D0H         PUBLIC        PSW
   C:0046H         PUBLIC        Power_Statu_Init
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 16
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 16
 
 
   -------         PROC          POWER_STATU_INIT
@@ -959,7 +959,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   -------         MODULE        CC6903
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0080H         PUBLIC        P0
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 17
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 17
 
 
   D:0090H         PUBLIC        P1
@@ -1019,7 +1019,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
   D:00C0H         PUBLIC        P4
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 18
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 18
 
 
   D:00C8H         PUBLIC        P5
@@ -1079,7 +1079,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:1160H         LINE#         62
   C:1166H         LINE#         63
   C:1166H         LINE#         65
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 19
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 19
 
 
   C:116FH         LINE#         66
@@ -1139,7 +1139,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
   D:00C0H         PUBLIC        P4
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 20
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 20
 
 
   D:00C8H         PUBLIC        P5
@@ -1199,7 +1199,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:0E26H         LINE#         76
   C:0E29H         LINE#         77
   C:0E29H         LINE#         78
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 21
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 21
 
 
   C:0E2BH         LINE#         79
@@ -1259,7 +1259,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:16BFH         LINE#         11
   C:16C4H         LINE#         12
   C:16C4H         LINE#         15
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 22
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 22
 
 
   C:16D2H         LINE#         16
@@ -1319,7 +1319,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:0EE8H         LINE#         79
   C:0EFFH         LINE#         80
   C:0F02H         LINE#         81
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 23
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 23
 
 
   C:0F02H         LINE#         82
@@ -1379,7 +1379,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   D:00B8H         PUBLIC        IP
   B:00A0H.1       PUBLIC        DC_24V
   C:0A5BH         PUBLIC        Modbus_Fun3
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 24
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 24
 
 
   C:0BC7H         PUBLIC        Modbus_Fun4
@@ -1439,7 +1439,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   X:020EH         SYMBOL        i
   -------         ENDDO         
   C:0A5BH         LINE#         67
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 25
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 25
 
 
   C:0A5BH         LINE#         68
@@ -1499,7 +1499,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:0BCDH         LINE#         144
   C:0BD8H         LINE#         145
   C:0BEAH         LINE#         147
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 26
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 26
 
 
   C:0BF0H         LINE#         148
@@ -1559,7 +1559,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:095BH         LINE#         230
   C:095BH         LINE#         231
   C:095DH         LINE#         232
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 27
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 27
 
 
   C:095FH         LINE#         233
@@ -1619,7 +1619,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:0A5AH         LINE#         309
   C:0A5AH         LINE#         310
   C:0A5AH         LINE#         311
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 28
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 28
 
 
   -------         ENDPROC       MODBUS_FUN6
@@ -1679,7 +1679,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:0883H         LINE#         387
   C:0883H         LINE#         388
   C:088BH         LINE#         390
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 29
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 29
 
 
   C:088FH         LINE#         391
@@ -1739,7 +1739,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:1606H         LINE#         467
   C:160DH         LINE#         469
   C:160FH         LINE#         470
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 30
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 30
 
 
   C:1616H         LINE#         471
@@ -1799,7 +1799,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   -------         MODULE        ?C?UIDIV
   C:051AH         PUBLIC        ?C?UIDIV
   -------         ENDMOD        ?C?UIDIV
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:25:08  PAGE 31
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  03/05/2025  17:26:01  PAGE 31
 
 
 
