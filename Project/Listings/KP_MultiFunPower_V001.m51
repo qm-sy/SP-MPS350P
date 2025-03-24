@@ -787,7 +787,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:1287H         PUBLIC        temp_scan
   B:00C0H.1       PUBLIC        AC_Out1
   B:00C0H.2       PUBLIC        AC_Out2
-  B:00C0H.3       PUBLIC        AC_Out3
+  B:00C0H.3       PUBLIC        AC_Out4
   X:0112H         SYMBOL        MF52E_tab
   C:13C2H         PUBLIC        _get_temp
   C:108CH         SYMBOL        _LookupTable
@@ -891,9 +891,9 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   D:008DH         PUBLIC        TH1
   B:00C0H.1       PUBLIC        AC_Out1
   B:00C0H.2       PUBLIC        AC_Out2
-  B:00C0H.3       PUBLIC        AC_Out3
+  B:00C0H.3       PUBLIC        AC_Out4
   D:008BH         PUBLIC        TL1
-  B:00C0H.4       PUBLIC        AC_Out4
+  B:00C0H.4       PUBLIC        AC_Out3
   B:0088H.6       PUBLIC        TR1
   C:1853H         PUBLIC        _DC_24V_out
   C:0056H         PUBLIC        INT2_ISR
@@ -1155,7 +1155,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   D:0088H         PUBLIC        TCON
   B:00C0H.1       PUBLIC        AC_Out1
   B:00C0H.2       PUBLIC        AC_Out2
-  B:00C0H.3       PUBLIC        AC_Out3
+  B:00C0H.3       PUBLIC        AC_Out4
   C:1481H         PUBLIC        eeprom_data_record
   D:00D0H         PUBLIC        PSW
   -------         PROC          EEPROM_STATU_JUDGE
@@ -1389,7 +1389,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   B:00C0H.7       PUBLIC        DR2
   B:00C0H.1       PUBLIC        AC_Out1
   B:00C0H.2       PUBLIC        AC_Out2
-  B:00C0H.3       PUBLIC        AC_Out3
+  B:00C0H.3       PUBLIC        AC_Out4
   C:15DFH         PUBLIC        _slave_to_master
   C:1219H         PUBLIC        Modbus_Event
   C:0739H         PUBLIC        Modbus_Fun16

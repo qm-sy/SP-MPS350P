@@ -1,0 +1,11 @@
+{
+    "files.exclude": {
+        "**/.vscode": true
+    },
+    "files.associations": {
+        "eeprom.h": "c",
+        "sys.h": "c",
+        "main.h": "c",
+        "uart.h": "c"
+    }
+}

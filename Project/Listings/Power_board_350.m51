@@ -849,7 +849,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\Power_board_350 (?C_STARTUP)
   B:00A8H.3       PUBLIC        ET1
   D:008DH         PUBLIC        TH1
   D:008BH         PUBLIC        TL1
-  B:00C0H.4       PUBLIC        AC_Out4
+  B:00C0H.4       PUBLIC        AC_Out3
   B:0088H.6       PUBLIC        TR1
   C:1441H         PUBLIC        _DC_24V_out
   C:120EH         PUBLIC        INT0_ISR
@@ -1556,7 +1556,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\Power_board_350 (?C_STARTUP)
   D:0088H         PUBLIC        TCON
   B:00C0H.1       PUBLIC        AC_Out1
   B:00C0H.2       PUBLIC        AC_Out2
-  B:00C0H.3       PUBLIC        AC_Out3
+  B:00C0H.3       PUBLIC        AC_Out4
   D:00D0H         PUBLIC        PSW
   -------         PROC          TIM3_ISR
 BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  02/05/2025  22:54:47  PAGE 27

@@ -17,9 +17,9 @@ void eeprom_statu_judge( void )
     //printf("The value of eeprom_statu_flag is 0x%02x \r\n",(int)eeprom_statu_flag);
     if( eeprom_statu_flag == 0xFF)
     {
-        eeprom.pwm_info          = 0x33;          //011 011 11 pwm7、8默认开，3档风速
+        eeprom.pwm_info          = 0x66;          //011 011 11 pwm7、8默认开，3档风速
         eeprom.led_info          = 0x01;          //0000000 1  led默认开
-        eeprom.ac220_info        = 0x65;          //0110010 1  220V_CH4默认开，50%功率
+        eeprom.ac220_info        = 0xC9;          //0110010 1  220V_CH4默认开，50%功率
         eeprom.temp_alarm_value1 = 0x50;          //NTC1 alarm value 默认80℃
         eeprom.temp_alarm_value2 = 0x50;          //NTC2 alarm value 默认80℃  
         eeprom.temp_alarm_value3 = 0x50;          //NTC3 alarm value 默认80℃ 

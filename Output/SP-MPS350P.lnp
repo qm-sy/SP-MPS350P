@@ -15,5 +15,5 @@
 "..\Output\dht11.obj",
 "..\Output\modbus_rtu.obj",
 "..\Output\common.obj" 
-TO "..\Output\KP_MultiFunPower_V001" 
-PRINT(".\Listings\KP_MultiFunPower_V001.m51") RAMSIZE(256) 
+TO "..\Output\SP-MPS350P" 
+PRINT(".\Listings\SP-MPS350P.m51") RAMSIZE(256) 

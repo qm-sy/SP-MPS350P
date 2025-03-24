@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/05/2025 17:26:01 PAGE 1   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/18/2025 13:07:34 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MODBUS_RTU
@@ -62,7 +62,7 @@ line level    source
   51   5      
   52   5                          default:
   53   5                              break;
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/05/2025 17:26:01 PAGE 2   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/18/2025 13:07:34 PAGE 2   
 
   54   5                      }
   55   4                  }
@@ -126,7 +126,7 @@ line level    source
  113   3                      modbus.byte_info_L = temp.temp_alarm_value1;           
  114   3                      break;
  115   3      
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/05/2025 17:26:01 PAGE 3   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/18/2025 13:07:34 PAGE 3   
 
  116   3                  /*  40005 NTC3 alarm value查询                            */
  117   3                  case 4:
@@ -190,7 +190,7 @@ line level    source
  175   3                  /*    30004 I_OUT1 I_OUT2 电流查询              */
  176   3                  case 3:    
  177   3                      modbus.byte_info_H = get_current(I_OUT2);     
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/05/2025 17:26:01 PAGE 4   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/18/2025 13:07:34 PAGE 4   
 
  178   3                      modbus.byte_info_L = get_current(I_OUT1);     
  179   3                      break;
@@ -254,7 +254,7 @@ line level    source
  237   2                  rs485.TX2_send_bytelength = 8;
  238   2      
  239   2                  DR2 = 1;                                    //485可以发送
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/05/2025 17:26:01 PAGE 5   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/18/2025 13:07:34 PAGE 5   
 
  240   2                  delay_ms(5);
  241   2                  S2CON |= S2TI;                              //开始发送
@@ -318,7 +318,7 @@ line level    source
  299   2                  rs485.TX2_send_bytelength = 8;
  300   2                  DR2 = 1;                                    //485可以发送
  301   2                  delay_ms(5);
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/05/2025 17:26:01 PAGE 6   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/18/2025 13:07:34 PAGE 6   
 
  302   2                  S2CON |= S2TI;                              //开始发送
  303   2      
@@ -382,7 +382,7 @@ line level    source
  361   3                      {
  362   4                          INTCLKO |= 0x10;
  363   4                          temp.temp_scan_allow_flag = 1;
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/05/2025 17:26:01 PAGE 7   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/18/2025 13:07:34 PAGE 7   
 
  364   4                          AC_Out1 = AC_Out2 = AC_Out3 = 0;
  365   4                      }else
@@ -446,7 +446,7 @@ line level    source
  423   1              uint16_t        crc16;
  424   1      
  425   1          /* 1, 预置16位CRC寄存器为0xffff（即全为1）                          */
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/05/2025 17:26:01 PAGE 8   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/18/2025 13:07:34 PAGE 8   
 
  426   1              crc16 = 0xffff; 
  427   1      
@@ -510,7 +510,7 @@ line level    source
  482          //         send_buf[2] = temp.temp_value1;
  483          //         send_buf[3] = temp.temp_value2;
  484          //         send_buf[4] = temp.temp_value3;
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/05/2025 17:26:01 PAGE 9   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/18/2025 13:07:34 PAGE 9   
 
  485          //         send_buf[5] = get_current(I_OUT1); 
  486          //         send_buf[6] = get_current(I_OUT2); 
