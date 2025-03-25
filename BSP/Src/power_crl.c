@@ -13,6 +13,7 @@ void Power_Statu_Init( void )
 {
     ac_220.zero_flag  = 0;
     AC_Out1 = AC_Out2 = AC_Out3 = 1;
+    AC_Out4 = 1;
 }
 
 /**

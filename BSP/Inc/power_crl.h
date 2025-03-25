@@ -13,6 +13,9 @@ typedef struct
     uint8_t  ac220_on_off;
     volatile uint8_t  zero_flag;          //220V输入触发标志位
     uint16_t time_delay;         //移相延时
+    uint8_t ac220_out1_flag;
+    uint8_t ac220_out2_flag;
+    uint8_t ac220_out3_flag;
 }AC_220;
 
 extern AC_220 ac_220;

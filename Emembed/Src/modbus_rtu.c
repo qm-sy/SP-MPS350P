@@ -21,7 +21,7 @@ void Modbus_Event( void )
 
         /*3.CRC校验                                         */
         crc = MODBUS_CRC16(rs485.RX2_buf, rs485.RX2_rev_cnt-2);
-        rccrc = (rs485.RX2_buf[rs485.RX2_rev_cnt-2]<<8) | (rs485.RX2_buf[rs485.RX2_rev_cnt-1]);
+        rccrc = (rs485.RX2_buf[rs485.RX2_rev_cnt-2]) | (rs485.RX2_buf[rs485.RX2_rev_cnt-1]<<8);
 
         /*4.清空接收计数                                    */
         rs485.RX2_rev_cnt = 0; 
@@ -84,39 +84,62 @@ void Modbus_Fun3( void )
         {
             /*  40001  两路PWM 开关状态及风速查询                 */
             case 0:
-                modbus.byte_info_H  = 0X00;
-                modbus.byte_info_L |= ((PWMB_CCR7 / 184) | (PWMB_CCR8 / 184)<<4);   //PWM7\8风速
+                // modbus.byte_info_H  = 0X00;
+                // modbus.byte_info_L |= ((PWMB_CCR7 / 184) | (PWMB_CCR8 / 184)<<4);   //PWM7\8风速
                 break;
 
             /*  40002  LED开关状态查询                          */
             case 1:
-                modbus.byte_info_H = 0X00;
-                if( DC_24V == 0 )
-                {
-                    modbus.byte_info_L |= 0x01;                              //LED开关状态
-                }
+                modbus.byte_info_L = get_temp(NTC_1);
+                modbus.byte_info_H = get_temp(NTC_2);     
                 break;
 
             /*  40003  220V CH4开关状态及功率查询               */
             case 2:
-                modbus.byte_info_H = 0X00;
-                modbus.byte_info_L = ((ac_220.time_delay - 58000) / 75)<<1;  //220V 功率
-                if( INTCLKO & 0x10 )
-                {
-                    modbus.byte_info_L |= 0x01;                             //220V运行状态
-                }
+                modbus.byte_info_H = 0X00;   
+                modbus.byte_info_L = get_temp(NTC_3);
+                // modbus.byte_info_H = 0X00;
+                // modbus.byte_info_L = ((ac_220.time_delay - 58000) / 75)<<1;  //220V 功率
+                // if( INTCLKO & 0x10 )
+                // {
+                //     modbus.byte_info_L |= 0x01;                             //220V运行状态
+                // }
                 break;
 
             /*  40004 NTC1 NTC2 alarm value查询                       */
             case 3:
-                modbus.byte_info_H = temp.temp_alarm_value2;           
-                modbus.byte_info_L = temp.temp_alarm_value1;           
+                modbus.byte_info_H = 0x41;           
+                modbus.byte_info_L = 0x19;           
                 break;
 
             /*  40005 NTC3 alarm value查询                            */
             case 4:
+                if( AC_Out1 == 0 )
+                {
+                    modbus.byte_info_L |= 0x01;
+                }else
+                {
+                    modbus.byte_info_L &= 0xFE;
+                }
+
+                if( AC_Out2 == 0 )
+                {
+                    modbus.byte_info_L |= 0x02;
+                }else
+                {
+                    modbus.byte_info_L &= 0xFD;
+                }
+
+                if( AC_Out3 == 0 )
+                {
+                    modbus.byte_info_L |= 0x04;
+                }else
+                {
+                    modbus.byte_info_L &= 0xFB;
+                }
+
                 modbus.byte_info_H = 0X00;   
-                modbus.byte_info_L = temp.temp_alarm_value3;          
+                // modbus.byte_info_L = temp.temp_alarm_value3;          
                 break;
 
             default:
@@ -204,12 +227,11 @@ void Modbus_Fun6( void )
 {
     switch (rs485.RX2_buf[3])
     {
-        /*  40001  两路PWM 开关状态及风速设置                 */
-        case 0:             
+        /*  40001  两路PWM 风速设置                 */
+        case 0x10:             
             memcpy(rs485.TX2_buf,rs485.RX2_buf,8);                            
             
-            PWMB_CCR7 = ((rs485.TX2_buf[5]) & 0x0F)*184;
-            PWMB_CCR8 = (rs485.TX2_buf[5]>>4)*184;
+            PWMB_CCR7 = PWMB_CCR8 = rs485.TX2_buf[5] * 184;
 
             rs485.TX2_send_bytelength = 8;
 
@@ -222,8 +244,8 @@ void Modbus_Fun6( void )
 
           break;
 
-        /*  40002  24V LED开关状态设置                          */
-        case 1:                                         
+        /*  0x11  LED 及 220V输出 开关状态设置                          */
+        case 0x11:                                         
             memcpy(rs485.TX2_buf,rs485.RX2_buf,8);
 
             if( rs485.TX2_buf[5] & 0X01 )
@@ -233,7 +255,13 @@ void Modbus_Fun6( void )
             {
                 DC_24V_out(0);
             }
-            
+
+            AC_Out1 = (1 - ((rs485.TX2_buf[5] >> 1) & 0x01));
+            AC_Out2 = (1 - ((rs485.TX2_buf[5] >> 2) & 0x01));
+            AC_Out3 = (1 - ((rs485.TX2_buf[5] >> 3) & 0x01));
+            ac_220.ac220_out1_flag = ~AC_Out1;
+            ac_220.ac220_out2_flag = ~AC_Out2;
+            ac_220.ac220_out3_flag = ~AC_Out3;
             rs485.TX2_send_bytelength = 8;
 
             DR2 = 1;                                    //485可以发送
@@ -245,35 +273,8 @@ void Modbus_Fun6( void )
 
             break;
 
-        /*  40003  220V 开关及大小设置                          */
-        case 2:                                         
-            memcpy(rs485.TX2_buf,rs485.RX2_buf,8);
-
-            if( rs485.TX2_buf[5] & 0X01 )
-            {
-                INTCLKO |= 0x10;
-                temp.temp_scan_allow_flag = 1;
-                AC_Out1 = AC_Out2 = AC_Out3 = 0;
-            }else
-            {
-                INTCLKO &= ~0x10;
-                temp.temp_scan_allow_flag = 0;
-                AC_Out1 = AC_Out2 = AC_Out3 = 1;
-            }
-            AC_220V_out(rs485.TX2_buf[5]>>1);
-
-            rs485.TX2_send_bytelength = 8;
-            DR2 = 1;                                    //485可以发送
-            delay_ms(5);
-            S2CON |= S2TI;                              //开始发送
-
-            eeprom.ac220_info = rs485.TX2_buf[5];
-            eeprom_data_record();
-
-            break;  
-            
-        /*  40004  NTC1 NTC2 alarm value 设置                   */
-        case 3:                                         
+        /*  0x12  NTC1 NTC2 alarm value 设置                          */
+        case 0x12:                                         
             memcpy(rs485.TX2_buf,rs485.RX2_buf,8);
 
             temp.temp_alarm_value1 = rs485.TX2_buf[5];
@@ -288,10 +289,10 @@ void Modbus_Fun6( void )
             eeprom.temp_alarm_value2 = temp.temp_alarm_value2;
             eeprom_data_record();
 
-            break;
-
-        /*  40005  NTC3 alarm value 设置                        */
-        case 4:                                         
+            break;  
+            
+        /*  0x13  NTC3 alarm value 设置                   */
+        case 0x13:                                         
             memcpy(rs485.TX2_buf,rs485.RX2_buf,8);
 
             temp.temp_alarm_value3 = rs485.TX2_buf[5];
@@ -335,15 +336,14 @@ void Modbus_Fun16( void )
         switch (i)
         {
             /*  40001  两路PWM 开关状态及风速设置                 */
-            case 0:
-                PWMB_CCR7 = (modbus.byte_info_L & 0x0F)*184;
-                PWMB_CCR8 = (modbus.byte_info_L>>4)*184;
+            case 0X10:
+                PWMB_CCR7 = PWMB_CCR8 = modbus.byte_info_L * 184;
 
                 eeprom.pwm_info = modbus.byte_info_L;
                 break;
             
-            /*  40002  24V LED开关状态设置                          */
-            case 1:
+            /*  0X11  24V LED  AC220V 1\2\3开关状态设置                          */
+            case 0X11:
                 if( modbus.byte_info_L & 0X01 )
                 {
                     DC_24V_out(1);
@@ -351,30 +351,20 @@ void Modbus_Fun16( void )
                 {
                     DC_24V_out(0);
                 }
+    
+                AC_Out1 = (1 - ((modbus.byte_info_L >> 1) & 0x01));
+                AC_Out2 = (1 - ((modbus.byte_info_L >> 2) & 0x01));
+                AC_Out3 = (1 - ((modbus.byte_info_L >> 3) & 0x01));
+
+                ac_220.ac220_out1_flag = ~AC_Out1;
+                ac_220.ac220_out2_flag = ~AC_Out2;
+                ac_220.ac220_out3_flag = ~AC_Out3;
 
                 eeprom.led_info = modbus.byte_info_L;
                 break;
 
-            /*  40003  220V 开关及大小设置                          */
-            case 2:
-                if( modbus.byte_info_L & 0X01 )
-                {
-                    INTCLKO |= 0x10;
-                    temp.temp_scan_allow_flag = 1;
-                    AC_Out1 = AC_Out2 = AC_Out3 = 0;
-                }else
-                {
-                    INTCLKO &= ~0x10;
-                    temp.temp_scan_allow_flag = 0;
-                    AC_Out1 = AC_Out2 = AC_Out3 = 1;
-                }
-                AC_220V_out(modbus.byte_info_L>>1);
-
-                eeprom.ac220_info = modbus.byte_info_L;
-                break;
-
-            /*  40004  NTC1 NTC2 alarm value 设置                   */
-            case 3:
+            /*  0X12  NTC1 NTC2 alarm value 设置                   */
+            case 0X12:
                 temp.temp_alarm_value1 = modbus.byte_info_L;
                 temp.temp_alarm_value2 = modbus.byte_info_H;
                 
@@ -383,8 +373,9 @@ void Modbus_Fun16( void )
                 eeprom.temp_alarm_value2 = temp.temp_alarm_value2;
                 break;
 
-            /*  40005  NTC3 alarm value 设置                        */
-            case 4:
+            
+            /*  0X13  NTC3 alarm value 设置                        */
+            case 0X13:
                 temp.temp_alarm_value3 = modbus.byte_info_L;
 
                 eeprom.temp_alarm_value3 = temp.temp_alarm_value3;
@@ -397,8 +388,8 @@ void Modbus_Fun16( void )
     }
     
     crc = MODBUS_CRC16(rs485.TX2_buf,6);
-    rs485.TX2_buf[6] = crc>>8;                 //CRC H
-    rs485.TX2_buf[7] = crc;                    //CRC L
+    rs485.TX2_buf[7] = crc>>8;                 //CRC H
+    rs485.TX2_buf[6] = crc;                    //CRC L
 
     rs485.TX2_send_bytelength = 8;
 
@@ -461,8 +452,8 @@ void slave_to_master(uint8_t length)
 
     crc = MODBUS_CRC16(rs485.TX2_buf,length);
 
-    rs485.TX2_buf[length] = crc>>8;                 //CRC H
-    rs485.TX2_buf[length+1] = crc;                  //CRC L
+    rs485.TX2_buf[length] = crc;                 //CRC H
+    rs485.TX2_buf[length+1] = crc>>8;                  //CRC L
 
     rs485.TX2_send_bytelength = length + 2;
 

@@ -102,30 +102,50 @@ void temp_scan( void )
 
         if( temp.temp_scan_allow_flag == 1)
         {
-            if( temp.temp_value1 >= temp.temp_alarm_value1 ) 
+            if( ac_220.ac220_out1_flag == 1 )
             {
-                AC_Out1 = 1;        //001
+                if( temp.temp_value1 >= temp.temp_alarm_value1 ) 
+                {
+                    AC_Out1 = 1;        //001
+                }
+                if( temp.temp_value1 < temp.temp_alarm_value1 - 1)
+                {
+                    AC_Out1 = 0;
+                }
             }else
             {
-                AC_Out1 = 0;
+                AC_Out1 = 1;
             }
 
-            if( temp.temp_value2 >= temp.temp_alarm_value2 ) 
+            if( ac_220.ac220_out2_flag == 1 )
             {
-                AC_Out2 = 1;        //001
+                if( temp.temp_value2 >= temp.temp_alarm_value2 ) 
+                {
+                    AC_Out2 = 1;        //001
+                }
+                if( temp.temp_value2 < temp.temp_alarm_value2 - 1)
+                {
+                    AC_Out2 = 0;
+                }
             }else
             {
-                AC_Out2 = 0;
+                AC_Out2 = 1;
             }
 
-            if( temp.temp_value3 >= temp.temp_alarm_value3 ) 
+            if( ac_220.ac220_out3_flag == 1 )
             {
-                AC_Out3 = 1;        //001
+                if( temp.temp_value3 >= temp.temp_alarm_value3 ) 
+                {
+                    AC_Out3 = 1;        //001
+                }
+                if( temp.temp_value3 < temp.temp_alarm_value3 - 1)
+                {
+                    AC_Out3 = 0;
+                }
             }else
             {
-                AC_Out3 = 0;
+                AC_Out3 = 1; 
             }
-    
         }
         temp.temp_scan_flag = 0;
     }

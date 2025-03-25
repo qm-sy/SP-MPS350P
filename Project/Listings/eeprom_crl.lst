@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   EEPROM_CRL                                                        03/18/2025 13:07:33 PAGE 1   
+C51 COMPILER V9.60.7.0   EEPROM_CRL                                                        03/24/2025 15:03:55 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE EEPROM_CRL
@@ -28,9 +28,9 @@ line level    source
   17   1          //printf("The value of eeprom_statu_flag is 0x%02x \r\n",(int)eeprom_statu_flag);
   18   1          if( eeprom_statu_flag == 0xFF)
   19   1          {
-  20   2              eeprom.pwm_info          = 0x66;          //011 011 11 pwm7、8默认开，3档风速
-  21   2              eeprom.led_info          = 0x01;          //0000000 1  led默认开
-  22   2              eeprom.ac220_info        = 0xC9;          //0110010 1  220V_CH4默认开，50%功率
+  20   2              eeprom.pwm_info          = 0x06;          //011 011 11 pwm7、8默认开，3档风速
+  21   2              eeprom.led_info          = 0x0f;          //0000000 1  led默认开
+  22   2              //eeprom.ac220_info        = 0xC9;          //0110010 1  220V_CH4默认开，50%功率
   23   2              eeprom.temp_alarm_value1 = 0x50;          //NTC1 alarm value 默认80℃
   24   2              eeprom.temp_alarm_value2 = 0x50;          //NTC2 alarm value 默认80℃  
   25   2              eeprom.temp_alarm_value3 = 0x50;          //NTC3 alarm value 默认80℃ 
@@ -53,7 +53,7 @@ line level    source
   42   1      
   43   1          ISP_Write(PWM_ADDR_EEPROM,eeprom.pwm_info);
   44   1          ISP_Write(LED_ADDR_EEPROM,eeprom.led_info);
-  45   1          ISP_Write(AC220_ADDR_EEPROM,eeprom.ac220_info);
+  45   1          //ISP_Write(AC220_ADDR_EEPROM,eeprom.ac220_info);
   46   1          ISP_Write(TEMP_ALARM1,eeprom.temp_alarm_value1);
   47   1          ISP_Write(TEMP_ALARM2,eeprom.temp_alarm_value2);
   48   1          ISP_Write(TEMP_ALARM3,eeprom.temp_alarm_value3);
@@ -62,7 +62,7 @@ line level    source
   51   1      
   52   1          // printf("The value of 0 is : 0x%02x \r\n",(int)eeprom.pwm_info);
   53   1          // printf("The value of 1 is : 0x%02x \r\n",(int)eeprom.led_info);
-C51 COMPILER V9.60.7.0   EEPROM_CRL                                                        03/18/2025 13:07:33 PAGE 2   
+C51 COMPILER V9.60.7.0   EEPROM_CRL                                                        03/24/2025 15:03:55 PAGE 2   
 
   54   1          // printf("The value of 2 is : 0x%02x \r\n",(int)eeprom.ac220_info);
   55   1          // printf("The value of 3 is : 0x%02x \r\n",(int)eeprom.temp_alarm_value1);
@@ -81,53 +81,42 @@ line level    source
   68          {
   69   1          /*    PWM7、PWM8 风速及开关状态初始化    */
   70   1          eeprom.pwm_info = ISP_Read(PWM_ADDR_EEPROM);
-  71   1          PWMB_CCR7 = ((eeprom.pwm_info) & 0x0F)*184;
-  72   1          PWMB_CCR8 = (eeprom.pwm_info>>4)*184;
-  73   1      
-  74   1          /*    LED开关状态初始化    */
-  75   1          eeprom.led_info = ISP_Read(LED_ADDR_EEPROM);
-  76   1          if( eeprom.led_info & 0X01 )
-  77   1          {
-  78   2              DC_24V_out(1);
-  79   2          }else
-  80   1          {
-  81   2              DC_24V_out(0);
-  82   2          }
-  83   1      
-  84   1          /*    220V输出开关状态初始化    */
-  85   1          eeprom.ac220_info = ISP_Read(AC220_ADDR_EEPROM);
-  86   1          if( eeprom.ac220_info & 0X01 )
-  87   1          {
-  88   2              INTCLKO |= 0x10;
-  89   2              temp.temp_scan_allow_flag = 1;
-  90   2              AC_Out1 = AC_Out2 = AC_Out3 = 0;
-  91   2          }else
-  92   1          {
-  93   2              INTCLKO &= ~0x10;
-  94   2              temp.temp_scan_allow_flag = 0;
-  95   2              AC_Out1 = AC_Out2 = AC_Out3 = 1;
-  96   2          }
-  97   1          AC_220V_out(eeprom.ac220_info>>1);
-  98   1      
-  99   1          /*    三路NTC alarm value初始化    */
- 100   1          eeprom.temp_alarm_value1 = ISP_Read(TEMP_ALARM1);
- 101   1          eeprom.temp_alarm_value2 = ISP_Read(TEMP_ALARM2);
- 102   1          eeprom.temp_alarm_value3 = ISP_Read(TEMP_ALARM3);
- 103   1      
- 104   1          temp.temp_alarm_value1 = eeprom.temp_alarm_value1;
- 105   1          temp.temp_alarm_value2 = eeprom.temp_alarm_value2;
- 106   1          temp.temp_alarm_value3 = eeprom.temp_alarm_value3;
- 107   1      }
+  71   1      
+  72   1          PWMB_CCR7 = PWMB_CCR8 = eeprom.pwm_info * 184;
+  73   1          /*    LED、AC220V三路 开关状态初始化    */
+  74   1          eeprom.led_info = ISP_Read(LED_ADDR_EEPROM);
+  75   1          if( eeprom.led_info & 0X01 )
+  76   1          {
+  77   2              DC_24V_out(1);
+  78   2          }else
+  79   1          {
+  80   2              DC_24V_out(0);
+  81   2          }
+  82   1          ac_220.ac220_out1_flag = ((eeprom.led_info >> 1) & 0x01);
+  83   1          ac_220.ac220_out2_flag = ((eeprom.led_info >> 2) & 0x01);
+  84   1          ac_220.ac220_out3_flag = ((eeprom.led_info >> 3) & 0x01);
+  85   1      
+  86   1          
+  87   1      
+  88   1          /*    三路NTC alarm value初始化    */
+  89   1          eeprom.temp_alarm_value1 = ISP_Read(TEMP_ALARM1);
+  90   1          eeprom.temp_alarm_value2 = ISP_Read(TEMP_ALARM2);
+  91   1      
+  92   1      
+  93   1          eeprom.temp_alarm_value3 = ISP_Read(TEMP_ALARM3);
+  94   1      
+  95   1          temp.temp_alarm_value1 = eeprom.temp_alarm_value1;
+  96   1          temp.temp_alarm_value2 = eeprom.temp_alarm_value2;
+  97   1          temp.temp_alarm_value3 = eeprom.temp_alarm_value3;
+  98   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    306    ----
+   CODE SIZE        =    259    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =      6    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
-C51 COMPILER V9.60.7.0   EEPROM_CRL                                                        03/18/2025 13:07:33 PAGE 3   
-
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

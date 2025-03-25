@@ -8,7 +8,7 @@
 #include "cc6903.h"
 #include "eeprom_crl.h"
 
-#define MY_ADDR     0x35
+#define MY_ADDR     0x01
 
 typedef struct 
 {

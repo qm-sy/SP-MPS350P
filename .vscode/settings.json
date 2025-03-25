@@ -6,6 +6,8 @@
         "eeprom.h": "c",
         "sys.h": "c",
         "main.h": "c",
-        "uart.h": "c"
+        "uart.h": "c",
+        "modbus_rtu.h": "c",
+        "ntc.h": "c"
     }
 }

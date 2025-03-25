@@ -17,9 +17,9 @@ void eeprom_statu_judge( void )
     //printf("The value of eeprom_statu_flag is 0x%02x \r\n",(int)eeprom_statu_flag);
     if( eeprom_statu_flag == 0xFF)
     {
-        eeprom.pwm_info          = 0x66;          //011 011 11 pwm7、8默认开，3档风速
-        eeprom.led_info          = 0x01;          //0000000 1  led默认开
-        eeprom.ac220_info        = 0xC9;          //0110010 1  220V_CH4默认开，50%功率
+        eeprom.pwm_info          = 0x03;          //011 011 11 pwm7、8默认开，3档风速
+        eeprom.led_info          = 0x0f;          //0000000 1  led默认开
+        //eeprom.ac220_info        = 0xC9;          //0110010 1  220V_CH4默认开，50%功率
         eeprom.temp_alarm_value1 = 0x50;          //NTC1 alarm value 默认80℃
         eeprom.temp_alarm_value2 = 0x50;          //NTC2 alarm value 默认80℃  
         eeprom.temp_alarm_value3 = 0x50;          //NTC3 alarm value 默认80℃ 
@@ -42,7 +42,7 @@ void eeprom_data_record( void )
 
     ISP_Write(PWM_ADDR_EEPROM,eeprom.pwm_info);
     ISP_Write(LED_ADDR_EEPROM,eeprom.led_info);
-    ISP_Write(AC220_ADDR_EEPROM,eeprom.ac220_info);
+    //ISP_Write(AC220_ADDR_EEPROM,eeprom.ac220_info);
     ISP_Write(TEMP_ALARM1,eeprom.temp_alarm_value1);
     ISP_Write(TEMP_ALARM2,eeprom.temp_alarm_value2);
     ISP_Write(TEMP_ALARM3,eeprom.temp_alarm_value3);
@@ -68,10 +68,9 @@ void eeprom_data_init( void )
 {
     /*    PWM7、PWM8 风速及开关状态初始化    */
     eeprom.pwm_info = ISP_Read(PWM_ADDR_EEPROM);
-    PWMB_CCR7 = ((eeprom.pwm_info) & 0x0F)*184;
-    PWMB_CCR8 = (eeprom.pwm_info>>4)*184;
 
-    /*    LED开关状态初始化    */
+    PWMB_CCR7 = PWMB_CCR8 = eeprom.pwm_info * 184;
+    /*    LED、AC220V三路 开关状态初始化    */
     eeprom.led_info = ISP_Read(LED_ADDR_EEPROM);
     if( eeprom.led_info & 0X01 )
     {
@@ -80,25 +79,17 @@ void eeprom_data_init( void )
     {
         DC_24V_out(0);
     }
+    ac_220.ac220_out1_flag = ((eeprom.led_info >> 1) & 0x01);
+    ac_220.ac220_out2_flag = ((eeprom.led_info >> 2) & 0x01);
+    ac_220.ac220_out3_flag = ((eeprom.led_info >> 3) & 0x01);
 
-    /*    220V输出开关状态初始化    */
-    eeprom.ac220_info = ISP_Read(AC220_ADDR_EEPROM);
-    if( eeprom.ac220_info & 0X01 )
-    {
-        INTCLKO |= 0x10;
-        temp.temp_scan_allow_flag = 1;
-        AC_Out1 = AC_Out2 = AC_Out3 = 0;
-    }else
-    {
-        INTCLKO &= ~0x10;
-        temp.temp_scan_allow_flag = 0;
-        AC_Out1 = AC_Out2 = AC_Out3 = 1;
-    }
-    AC_220V_out(eeprom.ac220_info>>1);
+    
 
     /*    三路NTC alarm value初始化    */
     eeprom.temp_alarm_value1 = ISP_Read(TEMP_ALARM1);
     eeprom.temp_alarm_value2 = ISP_Read(TEMP_ALARM2);
+
+
     eeprom.temp_alarm_value3 = ISP_Read(TEMP_ALARM3);
 
     temp.temp_alarm_value1 = eeprom.temp_alarm_value1;

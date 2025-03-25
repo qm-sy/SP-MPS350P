@@ -20,8 +20,8 @@ void main( void )
 
     /*  4路220输出控制  */
     Power_Statu_Init();
-    INT2_Init();
-    Timer1_Init();
+    //INT2_Init();
+    //Timer1_Init();
     Timer4_Init();
     
 
