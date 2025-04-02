@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/24/2025 15:03:56 PAGE 1   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/31/2025 16:10:07 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MODBUS_RTU
@@ -23,7 +23,7 @@ line level    source
   12          void Modbus_Event( void )
   13          {
   14   1          uint16_t crc,rccrc;
-  15   1      
+  15   1          
   16   1          /*1.接收完毕                                           */
   17   1          if( rs485.RX2_rev_end_Flag == 1 )
   18   1          {
@@ -36,7 +36,7 @@ line level    source
   25   2      
   26   2              /*4.清空接收计数                                    */
   27   2              rs485.RX2_rev_cnt = 0; 
-  28   2      
+  28   2              printf("HERE \r\n");
   29   2              /*5.CRC校验通过，进行地址域校验                      */
   30   2              if( crc == rccrc )
   31   2              {
@@ -62,7 +62,7 @@ line level    source
   51   5      
   52   5                          default:
   53   5                              break;
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/24/2025 15:03:56 PAGE 2   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/31/2025 16:10:07 PAGE 2   
 
   54   5                      }
   55   4                  }
@@ -88,7 +88,7 @@ line level    source
   75   1          rs485.TX2_buf[0]  = MY_ADDR;                //Addr
   76   1          rs485.TX2_buf[1]  = 0x03;                   //Fun
   77   1          rs485.TX2_buf[2]  = modbus.byte_cnt;        //Byte Count
-  78   1      
+  78   1          printf(" here \r\n ");
   79   1          for( i = modbus.start_addr; i < modbus.start_addr + modbus.byte_cnt/2; i++ )
   80   1          {
   81   2              /*    每次循环前初始化byte_info                       */
@@ -126,7 +126,7 @@ line level    source
  113   3                      break;
  114   3      
  115   3                  /*  40005 NTC3 alarm value查询                            */
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/24/2025 15:03:56 PAGE 3   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/31/2025 16:10:07 PAGE 3   
 
  116   3                  case 4:
  117   3                      if( AC_Out1 == 0 )
@@ -190,7 +190,7 @@ line level    source
  175   1          {
  176   2              /*    每次循环前初始化byte_info                       */
  177   2              modbus.byte_info_H = modbus.byte_info_L = 0X00;
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/24/2025 15:03:56 PAGE 4   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/31/2025 16:10:07 PAGE 4   
 
  178   2              switch (i)
  179   2              {   
@@ -254,7 +254,7 @@ line level    source
  237   2      
  238   2                  DR2 = 1;                                    //485可以发送
  239   2                  delay_ms(5);
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/24/2025 15:03:56 PAGE 5   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/31/2025 16:10:07 PAGE 5   
 
  240   2                  S2CON |= S2TI;                              //开始发送
  241   2      
@@ -318,7 +318,7 @@ line level    source
  299   2                  
  300   2                  rs485.TX2_send_bytelength = 8;
  301   2                  DR2 = 1;                                    //485可以发送
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/24/2025 15:03:56 PAGE 6   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/31/2025 16:10:07 PAGE 6   
 
  302   2                  delay_ms(5);
  303   2                  S2CON |= S2TI;                              //开始发送
@@ -382,7 +382,7 @@ line level    source
  361   3                      ac_220.ac220_out3_flag = ~AC_Out3;
  362   3      
  363   3                      eeprom.led_info = modbus.byte_info_L;
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/24/2025 15:03:56 PAGE 7   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/31/2025 16:10:07 PAGE 7   
 
  364   3                      break;
  365   3      
@@ -446,7 +446,7 @@ line level    source
  422   2                      crc16 ^= (uint16_t)*buf;                //
  423   2                      for(i=0; i<8; i++)              
  424   2                      {
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/24/2025 15:03:56 PAGE 8   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/31/2025 16:10:07 PAGE 8   
 
  425   3                  /* 3, 如果最低位为1，把CRC寄存器的内容右移一位(朝低位)，用0填补最高
              -位 再异或0xA001    */
@@ -510,7 +510,7 @@ line level    source
  482          //             send_buf[9] = 0x01;                             //220V运行状态
  483          //         }else
  484          //         {
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/24/2025 15:03:56 PAGE 9   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        03/31/2025 16:10:07 PAGE 9   
 
  485          //             send_buf[9] = 0x00;
  486          //         }
@@ -535,9 +535,9 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1614    ----
-   CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =      7       9
+   CODE SIZE        =   1666    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =      7      13
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

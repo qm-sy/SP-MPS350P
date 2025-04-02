@@ -8,6 +8,7 @@
         "main.h": "c",
         "uart.h": "c",
         "modbus_rtu.h": "c",
-        "ntc.h": "c"
+        "ntc.h": "c",
+        "communication.h": "c"
     }
 }

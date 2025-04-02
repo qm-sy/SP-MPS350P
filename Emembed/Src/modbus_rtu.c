@@ -12,7 +12,7 @@ MODBIS_INFO modbus;
 void Modbus_Event( void )
 {
     uint16_t crc,rccrc;
-
+    
     /*1.接收完毕                                           */
     if( rs485.RX2_rev_end_Flag == 1 )
     {
@@ -25,7 +25,7 @@ void Modbus_Event( void )
 
         /*4.清空接收计数                                    */
         rs485.RX2_rev_cnt = 0; 
-
+        printf("HERE \r\n");
         /*5.CRC校验通过，进行地址域校验                      */
         if( crc == rccrc )
         {
@@ -75,7 +75,7 @@ void Modbus_Fun3( void )
     rs485.TX2_buf[0]  = MY_ADDR;                //Addr
     rs485.TX2_buf[1]  = 0x03;                   //Fun
     rs485.TX2_buf[2]  = modbus.byte_cnt;        //Byte Count
-
+    printf(" here \r\n ");
     for( i = modbus.start_addr; i < modbus.start_addr + modbus.byte_cnt/2; i++ )
     {
         /*    每次循环前初始化byte_info                       */
@@ -84,8 +84,8 @@ void Modbus_Fun3( void )
         {
             /*  40001  两路PWM 开关状态及风速查询                 */
             case 0:
-                // modbus.byte_info_H  = 0X00;
-                // modbus.byte_info_L |= ((PWMB_CCR7 / 184) | (PWMB_CCR8 / 184)<<4);   //PWM7\8风速
+                modbus.byte_info_H  = 0X00;
+                modbus.byte_info_L  = 0X00;   
                 break;
 
             /*  40002  LED开关状态查询                          */

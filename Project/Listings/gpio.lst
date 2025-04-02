@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   GPIO                                                              03/24/2025 15:03:54 PAGE 1   
+C51 COMPILER V9.60.7.0   GPIO                                                              03/31/2025 16:10:05 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE GPIO
@@ -10,8 +10,8 @@ COMPILER INVOKED BY: D:\APP\Keil_v5\C51\BIN\C51.EXE ..\Core\Src\gpio.c LARGE OPT
 line level    source
 
    1          /*
-   2          |P0^0|          |P1^0|RX2       |P2^0|          |P3^0|RX1       |P4^0|          |P5^0|     
-   3          |P0^1|          |P1^1|TX2       |P2^1|DC_24V    |P3^1|TX1       |P4^1|AC_Out1   |P5^1|     
+   2          |P0^0|:RX3      |P1^0|RX2       |P2^0|          |P3^0|RX1       |P4^0|          |P5^0|     
+   3          |P0^1|:TX3      |P1^1|TX2       |P2^1|DC_24V    |P3^1|TX1       |P4^1|AC_Out1   |P5^1|     
    4          |P0^2|I_Out1    |P1^2|          |P2^2|PWM7      |P3^2|          |P4^2|AC_Out2   |P5^2|     
    5          |P0^3|I_Out2    |P1^3|          |P2^3|PWM8      |P3^3|          |P4^3|AC_Out4   |P5^3|     
    6          |P0^4|I_Out3    |P1^4|NTC1      |P2^4|          |P3^4|          |P4^4|AC_Out3   |P5^4|

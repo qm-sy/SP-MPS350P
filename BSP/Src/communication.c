@@ -57,7 +57,6 @@ void Uart2_ISR() interrupt 8
     {
         /* 2, 软件将S2RI清零，等待接收标志位重置，可继续发送    */
         S2CON &= ~S2RI;
-
         /* 3, 判断数据包是否接收完毕                           */
         if( !rs485.RX2_rev_end_Flag )
         {
