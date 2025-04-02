@@ -11,7 +11,6 @@ void main( void )
     
     /*  温度控制  */
     ADC_Init();
-    temp.temp_scan_allow_flag = 1;
 
     /*  485控制  */
     Uart2_Init();

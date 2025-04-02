@@ -15,12 +15,16 @@ void Tim4_ISR( void ) interrupt 20
     /* 1, 220V AC输出CH1~CH3固定最大功率输出           */
 
     /* 2, temp 上报 1s/次                             */
-    temp_scan_cnt++;
-    if( temp_scan_cnt == 100 )
+    if( temp.temp_scan_flag == 0 )
     {
-        temp.temp_scan_flag = 1;
-        temp_scan_cnt = 0;
+        temp_scan_cnt++;
+        if( temp_scan_cnt == 100 )
+        {
+            temp.temp_scan_flag = 1;
+            temp_scan_cnt = 0;
+        }
     }
+
     /* 3,  1s/次   发送statu                          */
     if( rs485.send_scan_flag == 0)
     {

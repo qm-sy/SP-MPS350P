@@ -1,11 +1,11 @@
-C51 COMPILER V9.60.7.0   COMMON                                                            03/31/2025 16:10:07 PAGE 1   
+C51 COMPILER V9.60.7.0   COMMON                                                            04/02/2025 22:31:32 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE COMMON
 OBJECT MODULE PLACED IN ..\Output\common.obj
-COMPILER INVOKED BY: D:\APP\Keil_v5\C51\BIN\C51.EXE ..\Emembed\Src\common.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\BSP
-                    -\Inc;..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\common.lst) OBJECT(..\Outpu
-                    -t\common.obj)
+COMPILER INVOKED BY: D:\APP\Keil_STM32\C51\BIN\C51.EXE ..\Emembed\Src\common.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\
+                    -BSP\Inc;..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\common.lst) OBJECT(..\Ou
+                    -tput\common.obj)
 
 line level    source
 
@@ -26,27 +26,31 @@ line level    source
   15   1          /* 1, 220V AC输出CH1~CH3固定最大功率输出           */
   16   1      
   17   1          /* 2, temp 上报 1s/次                             */
-  18   1          temp_scan_cnt++;
-  19   1          if( temp_scan_cnt == 100 )
-  20   1          {
-  21   2              temp.temp_scan_flag = 1;
-  22   2              temp_scan_cnt = 0;
-  23   2          }
-  24   1          /* 3,  1s/次   发送statu                          */
-  25   1          if( rs485.send_scan_flag == 0)
-  26   1          {
-  27   2              statu_scan_cnt++;
-  28   2              if( statu_scan_cnt == 100 )
-  29   2              {
-  30   3                  statu_scan_cnt = 0;
-  31   3                  rs485.send_scan_flag = 1;
-  32   3              }
-  33   2          }
-  34   1      }
+  18   1          if( temp.temp_scan_flag == 0 )
+  19   1          {
+  20   2              temp_scan_cnt++;
+  21   2              if( temp_scan_cnt == 100 )
+  22   2              {
+  23   3                  temp.temp_scan_flag = 1;
+  24   3                  temp_scan_cnt = 0;
+  25   3              }
+  26   2          }
+  27   1      
+  28   1          /* 3,  1s/次   发送statu                          */
+  29   1          if( rs485.send_scan_flag == 0)
+  30   1          {
+  31   2              statu_scan_cnt++;
+  32   2              if( statu_scan_cnt == 100 )
+  33   2              {
+  34   3                  statu_scan_cnt = 0;
+  35   3                  rs485.send_scan_flag = 1;
+  36   3              }
+  37   2          }
+  38   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     94    ----
+   CODE SIZE        =    100    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =      4    ----
    PDATA SIZE       =   ----    ----

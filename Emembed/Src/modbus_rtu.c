@@ -82,37 +82,35 @@ void Modbus_Fun3( void )
         modbus.byte_info_H = modbus.byte_info_L = 0X00;
         switch (i)
         {
-            /*  40001  两路PWM 开关状态及风速查询                 */
+            /*  0x00                  */
             case 0:
                 modbus.byte_info_H  = 0X00;
                 modbus.byte_info_L  = 0X00;   
+
                 break;
 
-            /*  40002  LED开关状态查询                          */
+            /*  0x01  NTC1、NTC2温度查询                           */
             case 1:
                 modbus.byte_info_L = get_temp(NTC_1);
-                modbus.byte_info_H = get_temp(NTC_2);     
+                modbus.byte_info_H = get_temp(NTC_2);   
+
                 break;
 
-            /*  40003  220V CH4开关状态及功率查询               */
+            /*  0x02  NTC3温度查询                */
             case 2:
                 modbus.byte_info_H = 0X00;   
                 modbus.byte_info_L = get_temp(NTC_3);
-                // modbus.byte_info_H = 0X00;
-                // modbus.byte_info_L = ((ac_220.time_delay - 58000) / 75)<<1;  //220V 功率
-                // if( INTCLKO & 0x10 )
-                // {
-                //     modbus.byte_info_L |= 0x01;                             //220V运行状态
-                // }
+
                 break;
 
-            /*  40004 NTC1 NTC2 alarm value查询                       */
+            /*  0x03 环境温湿度查询                   */
             case 3:
                 modbus.byte_info_H = 0x41;           
-                modbus.byte_info_L = 0x19;           
+                modbus.byte_info_L = 0x19;          
+
                 break;
 
-            /*  40005 NTC3 alarm value查询                            */
+            /*  0x04 LED、三路加热使能状态                           */
             case 4:
                 if( AC_Out1 == 0 )
                 {
@@ -227,7 +225,7 @@ void Modbus_Fun6( void )
 {
     switch (rs485.RX2_buf[3])
     {
-        /*  40001  两路PWM 风速设置                 */
+        /*  0x10  两路PWM 风速设置                 */
         case 0x10:             
             memcpy(rs485.TX2_buf,rs485.RX2_buf,8);                            
             
@@ -259,9 +257,11 @@ void Modbus_Fun6( void )
             AC_Out1 = (1 - ((rs485.TX2_buf[5] >> 1) & 0x01));
             AC_Out2 = (1 - ((rs485.TX2_buf[5] >> 2) & 0x01));
             AC_Out3 = (1 - ((rs485.TX2_buf[5] >> 3) & 0x01));
+
             ac_220.ac220_out1_flag = ~AC_Out1;
             ac_220.ac220_out2_flag = ~AC_Out2;
             ac_220.ac220_out3_flag = ~AC_Out3;
+
             rs485.TX2_send_bytelength = 8;
 
             DR2 = 1;                                    //485可以发送
@@ -335,7 +335,7 @@ void Modbus_Fun16( void )
         modbus.byte_info_L = rs485.RX2_buf[modbus.rcv_value_addr + 1];
         switch (i)
         {
-            /*  40001  两路PWM 开关状态及风速设置                 */
+            /*  0x10  两路PWM 开关状态及风速设置                 */
             case 0X10:
                 PWMB_CCR7 = PWMB_CCR8 = modbus.byte_info_L * 184;
 
