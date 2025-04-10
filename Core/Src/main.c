@@ -19,8 +19,8 @@ void main( void )
 
     /*  4路220输出控制  */
     Power_Statu_Init();
-    //INT2_Init();
-    //Timer1_Init();
+    // INT2_Init();
+    // Timer1_Init();
     Timer4_Init();
     
 
@@ -32,12 +32,15 @@ void main( void )
     eeprom_statu_judge();
     A1_DHT11 = 1;
     printf("========== code start ========== \r\n");
+    temp.temp_scan_flag = 0;
+    //AC_220V_out(50);
     //printf("========== code start ========== \r\n");
     
     while (1)
     {
         Modbus_Event();
         temp_scan();
+
         //  DHT11_TEST();
         // delay_ms(1000);
         //slave_scan();

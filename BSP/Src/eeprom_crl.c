@@ -20,9 +20,10 @@ void eeprom_statu_judge( void )
         eeprom.pwm_info          = 0x03;          //011 011 11 pwm7、8默认开，3档风速
         eeprom.led_info          = 0x0f;          //0000000 1  led默认开
         //eeprom.ac220_info        = 0xC9;          //0110010 1  220V_CH4默认开，50%功率
-        eeprom.temp_alarm_value1 = 0x50;          //NTC1 alarm value 默认80℃
-        eeprom.temp_alarm_value2 = 0x50;          //NTC2 alarm value 默认80℃  
-        eeprom.temp_alarm_value3 = 0x50;          //NTC3 alarm value 默认80℃ 
+        eeprom.temp_alarm_value1 = 0x2D;          //NTC1 alarm value 默认80℃
+        eeprom.temp_alarm_value2 = 0x2D;          //NTC2 alarm value 默认80℃  
+        eeprom.temp_alarm_value3 = 0x2D;          //NTC3 alarm value 默认80℃ 
+
 
         eeprom_data_record(); 
     }

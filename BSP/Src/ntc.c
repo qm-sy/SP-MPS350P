@@ -99,14 +99,19 @@ void temp_scan( void )
         temp.temp_value1 =  get_temp(NTC_1);
         temp.temp_value2 =  get_temp(NTC_2);
         temp.temp_value3 =  get_temp(NTC_3);
-
+        // printf("ntc1 temp value is %d \r\n",(int)temp.temp_value1);
+        // printf("ntc2 temp value is %d \r\n",(int)temp.temp_value2);
+        // printf("ntc3 temp value is %d \r\n",(int)temp.temp_value3);
+        // printf("ntc1 temp_alarm_value1 value is %d \r\n",(int)temp.temp_alarm_value1);
+        // printf("ntc2 temp_alarm_value2 value is %d \r\n",(int)temp.temp_alarm_value2);
+        // printf("ntc3 temp_alarm_value3 value is %d \r\n",(int)temp.temp_alarm_value3);
         if( ac_220.ac220_out1_flag == 1 )
         {
-            if( temp.temp_value1 >= temp.temp_alarm_value1 ) 
+            if( temp.temp_value3 >= temp.temp_alarm_value1 ) 
             {
                 AC_Out1 = 1;        //001
             }
-            if( temp.temp_value1 < temp.temp_alarm_value1 - 1)
+            else if( temp.temp_value3 < (temp.temp_alarm_value1 - 1))
             {
                 AC_Out1 = 0;
             }
@@ -121,7 +126,7 @@ void temp_scan( void )
             {
                 AC_Out2 = 1;        //001
             }
-            if( temp.temp_value2 < temp.temp_alarm_value2 - 1)
+            else if( temp.temp_value2 < (temp.temp_alarm_value2 - 1))
             {
                 AC_Out2 = 0;
             }
@@ -132,11 +137,11 @@ void temp_scan( void )
 
         if( ac_220.ac220_out3_flag == 1 )
         {
-            if( temp.temp_value3 >= temp.temp_alarm_value3 ) 
+            if( temp.temp_value1 >= temp.temp_alarm_value3 ) 
             {
                 AC_Out3 = 1;        //001
             }
-            if( temp.temp_value3 < temp.temp_alarm_value3 - 1)
+            else if( temp.temp_value1 < (temp.temp_alarm_value3 - 1))
             {
                 AC_Out3 = 0;
             }

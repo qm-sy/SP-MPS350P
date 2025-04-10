@@ -9,6 +9,7 @@
         "uart.h": "c",
         "modbus_rtu.h": "c",
         "ntc.h": "c",
-        "communication.h": "c"
+        "communication.h": "c",
+        "gpio.h": "c"
     }
 }

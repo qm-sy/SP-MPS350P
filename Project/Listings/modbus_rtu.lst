@@ -1,11 +1,11 @@
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/02/2025 22:31:31 PAGE 1   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/10/2025 14:41:52 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MODBUS_RTU
 OBJECT MODULE PLACED IN ..\Output\modbus_rtu.obj
-COMPILER INVOKED BY: D:\APP\Keil_STM32\C51\BIN\C51.EXE ..\Emembed\Src\modbus_rtu.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR
-                    -(..\BSP\Inc;..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\modbus_rtu.lst) OBJE
-                    -CT(..\Output\modbus_rtu.obj)
+COMPILER INVOKED BY: D:\APP\Keil_v5\C51\BIN\C51.EXE ..\Emembed\Src\modbus_rtu.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..
+                    -\BSP\Inc;..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\modbus_rtu.lst) OBJECT(
+                    -..\Output\modbus_rtu.obj)
 
 line level    source
 
@@ -36,7 +36,7 @@ line level    source
   25   2      
   26   2              /*4.清空接收计数                                    */
   27   2              rs485.RX2_rev_cnt = 0; 
-  28   2              printf("HERE \r\n");
+  28   2      
   29   2              /*5.CRC校验通过，进行地址域校验                      */
   30   2              if( crc == rccrc )
   31   2              {
@@ -49,495 +49,386 @@ line level    source
   38   5                              Modbus_Fun3();
   39   5                              break;
   40   5      
-  41   5                          case 0x04:
-  42   5                              Modbus_Fun4();
-  43   5                              break;
+  41   5                          case 0x06:
+  42   5                              Modbus_Fun6();
+  43   5                              break;  
   44   5      
-  45   5                          case 0x06:
-  46   5                              Modbus_Fun6();
-  47   5                              break;  
-  48   5      
-  49   5                          case 0x10:  
-  50   5                              Modbus_Fun16();
-  51   5      
-  52   5                          default:
-  53   5                              break;
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/02/2025 22:31:31 PAGE 2   
+  45   5                          case 0x10:  
+  46   5                              Modbus_Fun16();
+  47   5      
+  48   5                          default:
+  49   5                              break;
+  50   5                      }
+  51   4                  }
+  52   3              }
+  53   2          }
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/10/2025 14:41:52 PAGE 2   
 
-  54   5                      }
-  55   4                  }
-  56   3              }
-  57   2          }
-  58   1      }
-  59          
-  60          /**
-  61           * @brief       读输出寄存器  03
-  62           *
-  63           * @param   void
-  64           *
-  65           * @return  void 
-  66          **/
-  67          void Modbus_Fun3( void )
-  68          {
-  69   1          uint16_t i;
+  54   1      }
+  55          
+  56          /**
+  57           * @brief       读输出寄存器  03
+  58           *
+  59           * @param   void
+  60           *
+  61           * @return  void 
+  62          **/
+  63          void Modbus_Fun3( void )
+  64          {
+  65   1          uint16_t i;
+  66   1      
+  67   1          modbus.send_value_addr  = 3;                 //DATA1 H 位置
+  68   1          modbus.byte_cnt   = (rs485.RX2_buf[4]<<8 | rs485.RX2_buf[5]) *2;
+  69   1          modbus.start_addr = rs485.RX2_buf[2]<<8 | rs485.RX2_buf[3];
   70   1      
-  71   1          modbus.send_value_addr  = 3;                 //DATA1 H 位置
-  72   1          modbus.byte_cnt   = (rs485.RX2_buf[4]<<8 | rs485.RX2_buf[5]) *2;
-  73   1          modbus.start_addr = rs485.RX2_buf[2]<<8 | rs485.RX2_buf[3];
-  74   1      
-  75   1          rs485.TX2_buf[0]  = MY_ADDR;                //Addr
-  76   1          rs485.TX2_buf[1]  = 0x03;                   //Fun
-  77   1          rs485.TX2_buf[2]  = modbus.byte_cnt;        //Byte Count
-  78   1          printf(" here \r\n ");
-  79   1          for( i = modbus.start_addr; i < modbus.start_addr + modbus.byte_cnt/2; i++ )
-  80   1          {
-  81   2              /*    每次循环前初始化byte_info                       */
-  82   2              modbus.byte_info_H = modbus.byte_info_L = 0X00;
-  83   2              switch (i)
-  84   2              {
-  85   3                  /*  0x00                  */
-  86   3                  case 0:
-  87   3                      modbus.byte_info_H  = 0X00;
-  88   3                      modbus.byte_info_L  = 0X00;   
-  89   3      
-  90   3                      break;
-  91   3      
-  92   3                  /*  0x01  NTC1、NTC2温度查询                           */
-  93   3                  case 1:
-  94   3                      modbus.byte_info_L = get_temp(NTC_1);
-  95   3                      modbus.byte_info_H = get_temp(NTC_2);   
-  96   3      
-  97   3                      break;
-  98   3      
-  99   3                  /*  0x02  NTC3温度查询                */
- 100   3                  case 2:
- 101   3                      modbus.byte_info_H = 0X00;   
- 102   3                      modbus.byte_info_L = get_temp(NTC_3);
- 103   3      
- 104   3                      break;
- 105   3      
- 106   3                  /*  0x03 环境温湿度查询                   */
- 107   3                  case 3:
- 108   3                      modbus.byte_info_H = 0x41;           
- 109   3                      modbus.byte_info_L = 0x19;          
- 110   3      
- 111   3                      break;
- 112   3      
- 113   3                  /*  0x04 LED、三路加热使能状态                           */
- 114   3                  case 4:
- 115   3                      if( AC_Out1 == 0 )
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/02/2025 22:31:31 PAGE 3   
+  71   1          rs485.TX2_buf[0]  = MY_ADDR;                //Addr
+  72   1          rs485.TX2_buf[1]  = 0x03;                   //Fun
+  73   1          rs485.TX2_buf[2]  = modbus.byte_cnt;        //Byte Count
+  74   1          
+  75   1          for( i = modbus.start_addr; i < modbus.start_addr + modbus.byte_cnt/2; i++ )
+  76   1          {
+  77   2              /*    每次循环前初始化byte_info                       */
+  78   2              modbus.byte_info_H = modbus.byte_info_L = 0X00;
+  79   2              switch (i)
+  80   2              {
+  81   3                  /*  0x00                  */
+  82   3                  case 0:
+  83   3                      modbus.byte_info_H  = 0X00;
+  84   3                      modbus.byte_info_L  = 0X00;   
+  85   3      
+  86   3                      break;
+  87   3      
+  88   3                  /*  0x01  NTC1、NTC2温度查询                           */
+  89   3                  case 1:
+  90   3                      modbus.byte_info_L = temp.temp_alarm_value1;
+  91   3                      modbus.byte_info_H = temp.temp_alarm_value2;   
+  92   3      
+  93   3                      break;
+  94   3      
+  95   3                  /*  0x02  NTC3温度查询                */
+  96   3                  case 2:
+  97   3                      modbus.byte_info_H = 0X00;   
+  98   3                      modbus.byte_info_L = temp.temp_alarm_value3;
+  99   3      
+ 100   3                      break;
+ 101   3      
+ 102   3                  /*  0x03 环境温湿度查询                   */
+ 103   3                  case 3:
+ 104   3                      modbus.byte_info_H = 0x41;           
+ 105   3                      modbus.byte_info_L = 0x19;          
+ 106   3                      // modbus.byte_info_L = get_temp(NTC_1);
+ 107   3                      // modbus.byte_info_H = get_temp(NTC_3);  
+ 108   3                      break;
+ 109   3      
+ 110   3                  /*  0x04 LED、三路加热使能状态                           */
+ 111   3                  case 4:
+ 112   3                      if( ac_220.ac220_out1_flag == 1 )
+ 113   3                      {
+ 114   4                          modbus.byte_info_L |= 0x01;
+ 115   4                      }else
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/10/2025 14:41:52 PAGE 3   
 
  116   3                      {
- 117   4                          modbus.byte_info_L |= 0x01;
- 118   4                      }else
- 119   3                      {
- 120   4                          modbus.byte_info_L &= 0xFE;
- 121   4                      }
- 122   3      
- 123   3                      if( AC_Out2 == 0 )
+ 117   4                          modbus.byte_info_L &= 0xFE;
+ 118   4                      }
+ 119   3      
+ 120   3                      if( ac_220.ac220_out2_flag == 1 )
+ 121   3                      {
+ 122   4                          modbus.byte_info_L |= 0x02;
+ 123   4                      }else
  124   3                      {
- 125   4                          modbus.byte_info_L |= 0x02;
- 126   4                      }else
- 127   3                      {
- 128   4                          modbus.byte_info_L &= 0xFD;
- 129   4                      }
- 130   3      
- 131   3                      if( AC_Out3 == 0 )
+ 125   4                          modbus.byte_info_L &= 0xFD;
+ 126   4                      }
+ 127   3      
+ 128   3                      if( ac_220.ac220_out3_flag == 1 )
+ 129   3                      {
+ 130   4                          modbus.byte_info_L |= 0x04;
+ 131   4                      }else
  132   3                      {
- 133   4                          modbus.byte_info_L |= 0x04;
- 134   4                      }else
- 135   3                      {
- 136   4                          modbus.byte_info_L &= 0xFB;
- 137   4                      }
- 138   3      
- 139   3                      modbus.byte_info_H = 0X00;   
- 140   3                      // modbus.byte_info_L = temp.temp_alarm_value3;          
- 141   3                      break;
- 142   3      
- 143   3                  default:
- 144   3                      break;
- 145   3              }
- 146   2              rs485.TX2_buf[modbus.send_value_addr++] = modbus.byte_info_H;
- 147   2              rs485.TX2_buf[modbus.send_value_addr++] = modbus.byte_info_L;
- 148   2          }
- 149   1          slave_to_master(3 + modbus.byte_cnt);
- 150   1      }
- 151          
- 152          
- 153          /**
- 154           * @brief       读输入寄存器  04
- 155           *
- 156           * @param   void
- 157           *
- 158           * @return  void 
- 159          **/
- 160          void Modbus_Fun4( void )
- 161          {
- 162   1          uint16_t i;
- 163   1      
- 164   1          modbus.send_value_addr  = 3;                //DATA1 H 位置
- 165   1          modbus.byte_cnt   = (rs485.RX2_buf[4]<<8 | rs485.RX2_buf[5]) *2;
- 166   1          modbus.start_addr = rs485.RX2_buf[2]<<8 | rs485.RX2_buf[3];
- 167   1      
- 168   1          rs485.TX2_buf[0]  = MY_ADDR;                //Addr
- 169   1          rs485.TX2_buf[1]  = 0x04;                   //Fun
- 170   1          rs485.TX2_buf[2]  = modbus.byte_cnt;        //Byte Count
- 171   1      
- 172   1          for( i = modbus.start_addr; i < modbus.start_addr + modbus.byte_cnt/2; i++ )
- 173   1          {
- 174   2              /*    每次循环前初始化byte_info                       */
- 175   2              modbus.byte_info_H = modbus.byte_info_L = 0X00;
- 176   2              switch (i)
- 177   2              {   
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/02/2025 22:31:31 PAGE 4   
+ 133   4                          modbus.byte_info_L &= 0xFB;
+ 134   4                      }
+ 135   3      
+ 136   3                      modbus.byte_info_H = 0X00;   
+ 137   3      
+ 138   3                      break;
+ 139   3      
+ 140   3                  /*  0x05 风速、led状态查询                          */
+ 141   3                  case 5:
+ 142   3                      modbus.byte_info_L = ~DC_24V;       //LED状态 bit4
+ 143   3                      modbus.byte_info_L = ((PWMB_CCR7 / 184) | (modbus.byte_info_L<<3));         //风速 bit0~
+             -3
+ 144   3                      modbus.byte_info_H = 0X00;   
+ 145   3      
+ 146   3                      break;
+ 147   3                  default:
+ 148   3                      break;
+ 149   3              }
+ 150   2              rs485.TX2_buf[modbus.send_value_addr++] = modbus.byte_info_H;
+ 151   2              rs485.TX2_buf[modbus.send_value_addr++] = modbus.byte_info_L;
+ 152   2          }
+ 153   1          slave_to_master(3 + modbus.byte_cnt);
+ 154   1      }
+ 155          
+ 156          
+ 157          /**
+ 158           * @brief       写单个输出寄存器  06
+ 159           *
+ 160           * @param   void
+ 161           *
+ 162           * @return  void 
+ 163          **/
+ 164          void Modbus_Fun6( void )
+ 165          {
+ 166   1          switch (rs485.RX2_buf[3])
+ 167   1          {
+ 168   2              /*  0x10  两路PWM 风速设置                 */
+ 169   2              case 0x10:             
+ 170   2                  memcpy(rs485.TX2_buf,rs485.RX2_buf,8);                            
+ 171   2                  
+ 172   2                  PWMB_CCR7 = PWMB_CCR8 = rs485.TX2_buf[5] * 184;
+ 173   2      
+ 174   2                  rs485.TX2_send_bytelength = 8;
+ 175   2      
+ 176   2                  DR2 = 1;                                    //485可以发送
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/10/2025 14:41:52 PAGE 4   
 
- 178   3                  /*  30001 NTC1 NTC2温度查询                     */
- 179   3                  case 0:
- 180   3                      modbus.byte_info_L = get_temp(NTC_1);
- 181   3                      modbus.byte_info_H = get_temp(NTC_2);     
- 182   3                      break;
- 183   3      
- 184   3                  /*  30002 NTC3 NTC4温度查询                     */    
- 185   3                  case 1:
- 186   3                      modbus.byte_info_L = get_temp(NTC_3);
- 187   3                      modbus.byte_info_H = get_temp(NTC_4);
- 188   3                      break;
- 189   3      
- 190   3                  /*    30003 2路IR查询                         */
- 191   3                  case 2:    
- 192   3                      modbus.byte_info_H = 0xaa;
- 193   3                      modbus.byte_info_L = 0xbb;
- 194   3                      break;
- 195   3      
- 196   3                  /*    30004 I_OUT1 I_OUT2 电流查询              */
- 197   3                  case 3:    
- 198   3                      modbus.byte_info_H = get_current(I_OUT2);     
- 199   3                      modbus.byte_info_L = get_current(I_OUT1);     
- 200   3                      break;
- 201   3      
- 202   3                  /*    30005 I_OUT3 电流查询                     */
- 203   3                  case 4:    
- 204   3                      modbus.byte_info_H = 0X00;                    
- 205   3                      modbus.byte_info_L = get_current(I_OUT3);     
- 206   3                      break;
- 207   3      
- 208   3                  default:
- 209   3                      break;
- 210   3              }
- 211   2              rs485.TX2_buf[modbus.send_value_addr++] = modbus.byte_info_H;
- 212   2              rs485.TX2_buf[modbus.send_value_addr++] = modbus.byte_info_L;
- 213   2          }
- 214   1          slave_to_master(3 + modbus.byte_cnt);
- 215   1      }
- 216          
- 217          /**
- 218           * @brief       写单个输出寄存器  06
- 219           *
- 220           * @param   void
- 221           *
- 222           * @return  void 
- 223          **/
- 224          void Modbus_Fun6( void )
- 225          {
- 226   1          switch (rs485.RX2_buf[3])
- 227   1          {
- 228   2              /*  0x10  两路PWM 风速设置                 */
- 229   2              case 0x10:             
- 230   2                  memcpy(rs485.TX2_buf,rs485.RX2_buf,8);                            
- 231   2                  
- 232   2                  PWMB_CCR7 = PWMB_CCR8 = rs485.TX2_buf[5] * 184;
+ 177   2                  delay_ms(5);
+ 178   2                  S2CON |= S2TI;                              //开始发送
+ 179   2      
+ 180   2                  eeprom.pwm_info = rs485.TX2_buf[5];
+ 181   2                  eeprom_data_record();
+ 182   2      
+ 183   2                break;
+ 184   2      
+ 185   2              /*  0x11  LED 及 220V输出 开关状态设置                          */
+ 186   2              case 0x11:                                         
+ 187   2                  memcpy(rs485.TX2_buf,rs485.RX2_buf,8);
+ 188   2      
+ 189   2                  if( rs485.TX2_buf[5] & 0X01 )
+ 190   2                  {
+ 191   3                      DC_24V_out(1);
+ 192   3                  }else
+ 193   2                  {
+ 194   3                      DC_24V_out(0);
+ 195   3                  }
+ 196   2      
+ 197   2                  ac_220.ac220_out1_flag = ((modbus.byte_info_L >> 1) & 0x01);
+ 198   2                  ac_220.ac220_out2_flag = ((modbus.byte_info_L >> 2) & 0x01);
+ 199   2                  ac_220.ac220_out3_flag = ((modbus.byte_info_L >> 3) & 0x01);
+ 200   2      
+ 201   2                  rs485.TX2_send_bytelength = 8;
+ 202   2      
+ 203   2                  DR2 = 1;                                    //485可以发送
+ 204   2                  delay_ms(5);
+ 205   2                  S2CON |= S2TI;                              //开始发送
+ 206   2      
+ 207   2                  eeprom.led_info = rs485.TX2_buf[5];
+ 208   2                  eeprom_data_record();
+ 209   2      
+ 210   2                  break;
+ 211   2      
+ 212   2              /*  0x12  NTC1 NTC2 alarm value 设置                          */
+ 213   2              case 0x12:                                         
+ 214   2                  memcpy(rs485.TX2_buf,rs485.RX2_buf,8);
+ 215   2      
+ 216   2                  temp.temp_alarm_value1 = rs485.TX2_buf[5];
+ 217   2                  temp.temp_alarm_value2 = rs485.TX2_buf[4];
+ 218   2                  
+ 219   2                  rs485.TX2_send_bytelength = 8;
+ 220   2                  DR2 = 1;                                    //485可以发送
+ 221   2                  delay_ms(5);
+ 222   2                  S2CON |= S2TI;                              //开始发送
+ 223   2      
+ 224   2                  eeprom.temp_alarm_value1 = temp.temp_alarm_value1;
+ 225   2                  eeprom.temp_alarm_value2 = temp.temp_alarm_value2;
+ 226   2                  eeprom_data_record();
+ 227   2      
+ 228   2                  break;  
+ 229   2                  
+ 230   2              /*  0x13  NTC3 alarm value 设置                   */
+ 231   2              case 0x13:                                         
+ 232   2                  memcpy(rs485.TX2_buf,rs485.RX2_buf,8);
  233   2      
- 234   2                  rs485.TX2_send_bytelength = 8;
- 235   2      
- 236   2                  DR2 = 1;                                    //485可以发送
- 237   2                  delay_ms(5);
- 238   2                  S2CON |= S2TI;                              //开始发送
- 239   2      
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/02/2025 22:31:31 PAGE 5   
+ 234   2                  temp.temp_alarm_value3 = rs485.TX2_buf[5];
+ 235   2                  
+ 236   2                  rs485.TX2_send_bytelength = 8;
+ 237   2                  DR2 = 1;                                    //485可以发送
+ 238   2                  delay_ms(5);
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/10/2025 14:41:52 PAGE 5   
 
- 240   2                  eeprom.pwm_info = rs485.TX2_buf[5];
- 241   2                  eeprom_data_record();
- 242   2      
- 243   2                break;
- 244   2      
- 245   2              /*  0x11  LED 及 220V输出 开关状态设置                          */
- 246   2              case 0x11:                                         
- 247   2                  memcpy(rs485.TX2_buf,rs485.RX2_buf,8);
- 248   2      
- 249   2                  if( rs485.TX2_buf[5] & 0X01 )
- 250   2                  {
- 251   3                      DC_24V_out(1);
- 252   3                  }else
- 253   2                  {
- 254   3                      DC_24V_out(0);
- 255   3                  }
- 256   2      
- 257   2                  AC_Out1 = (1 - ((rs485.TX2_buf[5] >> 1) & 0x01));
- 258   2                  AC_Out2 = (1 - ((rs485.TX2_buf[5] >> 2) & 0x01));
- 259   2                  AC_Out3 = (1 - ((rs485.TX2_buf[5] >> 3) & 0x01));
- 260   2      
- 261   2                  ac_220.ac220_out1_flag = ~AC_Out1;
- 262   2                  ac_220.ac220_out2_flag = ~AC_Out2;
- 263   2                  ac_220.ac220_out3_flag = ~AC_Out3;
- 264   2      
- 265   2                  rs485.TX2_send_bytelength = 8;
- 266   2      
- 267   2                  DR2 = 1;                                    //485可以发送
- 268   2                  delay_ms(5);
- 269   2                  S2CON |= S2TI;                              //开始发送
- 270   2      
- 271   2                  eeprom.led_info = rs485.TX2_buf[5];
- 272   2                  eeprom_data_record();
- 273   2      
- 274   2                  break;
- 275   2      
- 276   2              /*  0x12  NTC1 NTC2 alarm value 设置                          */
- 277   2              case 0x12:                                         
- 278   2                  memcpy(rs485.TX2_buf,rs485.RX2_buf,8);
- 279   2      
- 280   2                  temp.temp_alarm_value1 = rs485.TX2_buf[5];
- 281   2                  temp.temp_alarm_value2 = rs485.TX2_buf[4];
- 282   2                  
- 283   2                  rs485.TX2_send_bytelength = 8;
- 284   2                  DR2 = 1;                                    //485可以发送
- 285   2                  delay_ms(5);
- 286   2                  S2CON |= S2TI;                              //开始发送
- 287   2      
- 288   2                  eeprom.temp_alarm_value1 = temp.temp_alarm_value1;
- 289   2                  eeprom.temp_alarm_value2 = temp.temp_alarm_value2;
- 290   2                  eeprom_data_record();
- 291   2      
- 292   2                  break;  
- 293   2                  
- 294   2              /*  0x13  NTC3 alarm value 设置                   */
- 295   2              case 0x13:                                         
- 296   2                  memcpy(rs485.TX2_buf,rs485.RX2_buf,8);
- 297   2      
- 298   2                  temp.temp_alarm_value3 = rs485.TX2_buf[5];
- 299   2                  
- 300   2                  rs485.TX2_send_bytelength = 8;
- 301   2                  DR2 = 1;                                    //485可以发送
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/02/2025 22:31:31 PAGE 6   
+ 239   2                  S2CON |= S2TI;                              //开始发送
+ 240   2      
+ 241   2                  eeprom.temp_alarm_value3 = temp.temp_alarm_value3;
+ 242   2                  eeprom_data_record();
+ 243   2      
+ 244   2                  break;
+ 245   2              default:
+ 246   2                  break;   
+ 247   2          }
+ 248   1      }
+ 249          
+ 250          /**
+ 251           * @brief       写多个输出寄存器  16
+ 252           *
+ 253           * @param   void
+ 254           *
+ 255           * @return  void 
+ 256          **/
+ 257          void Modbus_Fun16( void )
+ 258          {
+ 259   1          uint16_t crc;
+ 260   1          uint16_t i;
+ 261   1      
+ 262   1          modbus.rcv_value_addr = 7;                  //DATA1 H位置
+ 263   1          modbus.byte_cnt   = rs485.RX2_buf[6];
+ 264   1          modbus.start_addr = rs485.RX2_buf[2]<<8 | rs485.RX2_buf[3];
+ 265   1      
+ 266   1          memcpy(rs485.TX2_buf,rs485.RX2_buf,6);
+ 267   1          crc = MODBUS_CRC16(rs485.TX2_buf,6);
+ 268   1          rs485.TX2_buf[7] = crc>>8;                 //CRC H
+ 269   1          rs485.TX2_buf[6] = crc;                    //CRC L
+ 270   1      
+ 271   1          rs485.TX2_send_bytelength = 8;
+ 272   1          DR2 = 1;                                   //485可以发送
+ 273   1          delay_ms(2);
+ 274   1          S2CON |= S2TI;  
+ 275   1          delay_ms(1);
+ 276   1          for( i = modbus.start_addr; i < modbus.start_addr + modbus.byte_cnt/2; i++)
+ 277   1          {
+ 278   2              modbus.byte_info_H = rs485.RX2_buf[modbus.rcv_value_addr];
+ 279   2              modbus.byte_info_L = rs485.RX2_buf[modbus.rcv_value_addr + 1];
+ 280   2              switch (i)
+ 281   2              {
+ 282   3                  /*  0x10  两路PWM 开关状态及风速设置                 */
+ 283   3                  case 0X10:
+ 284   3                      PWMB_CCR7 = PWMB_CCR8 = modbus.byte_info_L * 184;
+ 285   3      
+ 286   3                      eeprom.pwm_info = modbus.byte_info_L;
+ 287   3                      break;
+ 288   3                  
+ 289   3                  /*  0X11  24V LED  AC220V 1\2\3开关状态设置                          */
+ 290   3                  case 0X11:
+ 291   3                      if( modbus.byte_info_L & 0X01 )
+ 292   3                      {
+ 293   4                          DC_24V_out(1);
+ 294   4                      }else
+ 295   3                      {
+ 296   4                          DC_24V_out(0);
+ 297   4                      }
+ 298   3                      ac_220.ac220_out1_flag = ((modbus.byte_info_L >> 1) & 0x01);
+ 299   3                      ac_220.ac220_out2_flag = ((modbus.byte_info_L >> 2) & 0x01);
+ 300   3                      ac_220.ac220_out3_flag = ((modbus.byte_info_L >> 3) & 0x01);
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/10/2025 14:41:52 PAGE 6   
 
- 302   2                  delay_ms(5);
- 303   2                  S2CON |= S2TI;                              //开始发送
- 304   2      
- 305   2                  eeprom.temp_alarm_value3 = temp.temp_alarm_value3;
- 306   2                  eeprom_data_record();
- 307   2      
- 308   2                  break;
- 309   2              default:
- 310   2                  break;   
- 311   2          }
- 312   1      }
- 313          
- 314          /**
- 315           * @brief       写多个输出寄存器  16
- 316           *
- 317           * @param   void
- 318           *
- 319           * @return  void 
- 320          **/
- 321          void Modbus_Fun16( void )
- 322          {
- 323   1          uint16_t crc;
- 324   1          uint16_t i;
- 325   1      
- 326   1          modbus.rcv_value_addr = 7;                  //DATA1 H位置
- 327   1          modbus.byte_cnt   = rs485.RX2_buf[6];
- 328   1          modbus.start_addr = rs485.RX2_buf[2]<<8 | rs485.RX2_buf[3];
+ 301   3      
+ 302   3                      eeprom.led_info = modbus.byte_info_L;
+ 303   3                      break;
+ 304   3      
+ 305   3                  /*  0X12  NTC1 NTC2 alarm value 设置                   */
+ 306   3                  case 0X12:
+ 307   3                      temp.temp_alarm_value1 = modbus.byte_info_L;
+ 308   3                      temp.temp_alarm_value2 = modbus.byte_info_H;
+ 309   3                      
+ 310   3      
+ 311   3                      eeprom.temp_alarm_value1 = temp.temp_alarm_value1;
+ 312   3                      eeprom.temp_alarm_value2 = temp.temp_alarm_value2;
+ 313   3                      break;
+ 314   3      
+ 315   3                  
+ 316   3                  /*  0X13  NTC3 alarm value 设置                        */
+ 317   3                  case 0X13:
+ 318   3                      temp.temp_alarm_value3 = modbus.byte_info_L;
+ 319   3      
+ 320   3                      eeprom.temp_alarm_value3 = temp.temp_alarm_value3;
+ 321   3                      break;
+ 322   3      
+ 323   3                  default:
+ 324   3                      break;
+ 325   3              }
+ 326   2              modbus.rcv_value_addr += 2;         //从Value1_H →→ 从Value2_H
+ 327   2          }
+ 328   1          
  329   1      
- 330   1          memcpy(rs485.TX2_buf,rs485.RX2_buf,6);
- 331   1      
- 332   1          for( i = modbus.start_addr; i < modbus.start_addr + modbus.byte_cnt/2; i++)
- 333   1          {
- 334   2              modbus.byte_info_H = rs485.RX2_buf[modbus.rcv_value_addr];
- 335   2              modbus.byte_info_L = rs485.RX2_buf[modbus.rcv_value_addr + 1];
- 336   2              switch (i)
- 337   2              {
- 338   3                  /*  0x10  两路PWM 开关状态及风速设置                 */
- 339   3                  case 0X10:
- 340   3                      PWMB_CCR7 = PWMB_CCR8 = modbus.byte_info_L * 184;
- 341   3      
- 342   3                      eeprom.pwm_info = modbus.byte_info_L;
- 343   3                      break;
- 344   3                  
- 345   3                  /*  0X11  24V LED  AC220V 1\2\3开关状态设置                          */
- 346   3                  case 0X11:
- 347   3                      if( modbus.byte_info_L & 0X01 )
- 348   3                      {
- 349   4                          DC_24V_out(1);
- 350   4                      }else
- 351   3                      {
- 352   4                          DC_24V_out(0);
- 353   4                      }
- 354   3          
- 355   3                      AC_Out1 = (1 - ((modbus.byte_info_L >> 1) & 0x01));
- 356   3                      AC_Out2 = (1 - ((modbus.byte_info_L >> 2) & 0x01));
- 357   3                      AC_Out3 = (1 - ((modbus.byte_info_L >> 3) & 0x01));
- 358   3      
- 359   3                      ac_220.ac220_out1_flag = ~AC_Out1;
- 360   3                      ac_220.ac220_out2_flag = ~AC_Out2;
- 361   3                      ac_220.ac220_out3_flag = ~AC_Out3;
- 362   3      
- 363   3                      eeprom.led_info = modbus.byte_info_L;
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/02/2025 22:31:31 PAGE 7   
-
- 364   3                      break;
- 365   3      
- 366   3                  /*  0X12  NTC1 NTC2 alarm value 设置                   */
- 367   3                  case 0X12:
- 368   3                      temp.temp_alarm_value1 = modbus.byte_info_L;
- 369   3                      temp.temp_alarm_value2 = modbus.byte_info_H;
- 370   3                      
- 371   3      
- 372   3                      eeprom.temp_alarm_value1 = temp.temp_alarm_value1;
- 373   3                      eeprom.temp_alarm_value2 = temp.temp_alarm_value2;
- 374   3                      break;
- 375   3      
- 376   3                  
- 377   3                  /*  0X13  NTC3 alarm value 设置                        */
- 378   3                  case 0X13:
- 379   3                      temp.temp_alarm_value3 = modbus.byte_info_L;
- 380   3      
- 381   3                      eeprom.temp_alarm_value3 = temp.temp_alarm_value3;
- 382   3                      break;
- 383   3      
- 384   3                  default:
- 385   3                      break;
- 386   3              }
- 387   2              modbus.rcv_value_addr += 2;         //从Value1_H →→ 从Value2_H
- 388   2          }
- 389   1          
- 390   1          crc = MODBUS_CRC16(rs485.TX2_buf,6);
- 391   1          rs485.TX2_buf[7] = crc>>8;                 //CRC H
- 392   1          rs485.TX2_buf[6] = crc;                    //CRC L
- 393   1      
- 394   1          rs485.TX2_send_bytelength = 8;
- 395   1      
- 396   1          DR2 = 1;                                   //485可以发送
- 397   1          delay_ms(5);
- 398   1          S2CON |= S2TI;  
- 399   1      
- 400   1          eeprom_data_record();                      //记录更改后的值
- 401   1      }
- 402          
- 403          /**
- 404           * @brief       crc校验函数
- 405           * 
- 406           * @param   buf：  Address(1 byte) +Funtion(1 byte) ）+Data(n byte)   
- 407           * @param   length:数据长度           
- 408           * 
- 409            @return  crc16:crc校验的值 2byte
- 410           */
- 411          uint16_t MODBUS_CRC16(uint8_t *buf, uint8_t length)
- 412          {
- 413   1              uint8_t i;
- 414   1              uint16_t        crc16;
- 415   1      
- 416   1          /* 1, 预置16位CRC寄存器为0xffff（即全为1）                          */
- 417   1              crc16 = 0xffff; 
- 418   1      
- 419   1              do
- 420   1              {
- 421   2              /* 2, 把8位数据与16位CRC寄存器的低位相异或，把结果放于CRC寄存器     */    
+ 330   1      
+ 331   1          //DR2 = 1;                                   //485可以发送
+ 332   1          //delay_ms(5);
+ 333   1          
+ 334   1      
+ 335   1          eeprom_data_record();                      //记录更改后的值
+ 336   1      }
+ 337          
+ 338          /**
+ 339           * @brief       crc校验函数
+ 340           * 
+ 341           * @param   buf：  Address(1 byte) +Funtion(1 byte) ）+Data(n byte)   
+ 342           * @param   length:数据长度           
+ 343           * 
+ 344            @return  crc16:crc校验的值 2byte
+ 345           */
+ 346          uint16_t MODBUS_CRC16(uint8_t *buf, uint8_t length)
+ 347          {
+ 348   1              uint8_t i;
+ 349   1              uint16_t        crc16;
+ 350   1      
+ 351   1          /* 1, 预置16位CRC寄存器为0xffff（即全为1）                          */
+ 352   1              crc16 = 0xffff; 
+ 353   1      
+ 354   1              do
+ 355   1              {
+ 356   2              /* 2, 把8位数据与16位CRC寄存器的低位相异或，把结果放于CRC寄存器     */    
              -    
- 422   2                      crc16 ^= (uint16_t)*buf;                //
- 423   2                      for(i=0; i<8; i++)              
- 424   2                      {
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/02/2025 22:31:31 PAGE 8   
-
- 425   3                  /* 3, 如果最低位为1，把CRC寄存器的内容右移一位(朝低位)，用0填补最高
+ 357   2                      crc16 ^= (uint16_t)*buf;                //
+ 358   2                      for(i=0; i<8; i++)              
+ 359   2                      {
+ 360   3                  /* 3, 如果最低位为1，把CRC寄存器的内容右移一位(朝低位)，用0填补最高
              -位 再异或0xA001    */
- 426   3                              if(crc16 & 1)
- 427   3                  {
- 428   4                      crc16 = (crc16 >> 1) ^ 0xA001;
- 429   4                  }
- 430   3                  /* 4, 如果最低位为0，把CRC寄存器的内容右移一位(朝低位)，用0填补最高
-             -位                */
- 431   3                  else
- 432   3                  {
- 433   4                      crc16 >>= 1;
- 434   4                  }           
- 435   3                      }
- 436   2                      buf++;
- 437   2              }while(--length != 0);
- 438   1      
- 439   1              return  (crc16);
- 440   1      }
- 441          
- 442          /**
- 443           * @brief       从机回复主机
- 444           *  
- 445           * @param   length:数据长度           
- 446           * 
- 447            @return  crc16:crc校验的值 2byte
- 448           */
- 449          void slave_to_master(uint8_t length)
- 450          {
- 451   1          uint16_t crc;
- 452   1      
- 453   1          crc = MODBUS_CRC16(rs485.TX2_buf,length);
- 454   1      
- 455   1          rs485.TX2_buf[length] = crc;                 //CRC H
- 456   1          rs485.TX2_buf[length+1] = crc>>8;                  //CRC L
- 457   1      
- 458   1          rs485.TX2_send_bytelength = length + 2;
- 459   1      
- 460   1          DR2 = 1;                                        //485可以发送
- 461   1          delay_ms(5);
- 462   1          S2CON |= S2TI;                                  //开始发送
- 463   1      }
- 464          
- 465          // void slave_scan( void )
- 466          // {
- 467          //     uint8_t send_buf[12];
- 468          //     uint16_t crc;
- 469          //     if( rs485.send_scan_flag == 1)
- 470          //     {
- 471          //         send_buf[0] = 0x35;
- 472          //         send_buf[1] = 0x03;
- 473          //         send_buf[2] = temp.temp_value1;
- 474          //         send_buf[3] = temp.temp_value2;
- 475          //         send_buf[4] = temp.temp_value3;
- 476          //         send_buf[5] = get_current(I_OUT1); 
- 477          //         send_buf[6] = get_current(I_OUT2); 
- 478          //         send_buf[7] = get_current(I_OUT3); 
- 479          //         send_buf[8] = ((PWMB_CCR8/184)<<4 | (PWMB_CCR8/184));
- 480          //         if( INTCLKO & 0x10 )
- 481          //         {
- 482          //             send_buf[9] = 0x01;                             //220V运行状态
- 483          //         }else
- 484          //         {
-C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/02/2025 22:31:31 PAGE 9   
+C51 COMPILER V9.60.7.0   MODBUS_RTU                                                        04/10/2025 14:41:52 PAGE 7   
 
- 485          //             send_buf[9] = 0x00;
- 486          //         }
- 487          //         send_buf[10]= (uint8_t)((ac_220.time_delay-58000)/75);
- 488          
- 489          //         crc = MODBUS_CRC16(send_buf,11);
- 490              
- 491          //         send_buf[11] = crc>>8;
- 492          //         send_buf[12] = crc;
- 493              
- 494          //         memcpy(rs485.TX2_buf,send_buf,13);
- 495              
- 496          //         rs485.TX2_send_bytelength = 13;
- 497          //         DR2 = 1;                                        //485可以发送
- 498          //         delay_ms(5);
- 499          //         S2CON |= S2TI;                                  //开始发送
- 500          
- 501          //         rs485.send_scan_flag = 0;
- 502          //         //DR2 = 0;
- 503          //     }  
- 504          // }
+ 361   3                              if(crc16 & 1)
+ 362   3                  {
+ 363   4                      crc16 = (crc16 >> 1) ^ 0xA001;
+ 364   4                  }
+ 365   3                  /* 4, 如果最低位为0，把CRC寄存器的内容右移一位(朝低位)，用0填补最高
+             -位                */
+ 366   3                  else
+ 367   3                  {
+ 368   4                      crc16 >>= 1;
+ 369   4                  }           
+ 370   3                      }
+ 371   2                      buf++;
+ 372   2              }while(--length != 0);
+ 373   1      
+ 374   1              return  (crc16);
+ 375   1      }
+ 376          
+ 377          /**
+ 378           * @brief       从机回复主机
+ 379           *  
+ 380           * @param   length:数据长度           
+ 381           * 
+ 382            @return  crc16:crc校验的值 2byte
+ 383           */
+ 384          void slave_to_master(uint8_t length)
+ 385          {
+ 386   1          uint16_t crc;
+ 387   1      
+ 388   1          crc = MODBUS_CRC16(rs485.TX2_buf,length);
+ 389   1      
+ 390   1          rs485.TX2_buf[length] = crc;                 //CRC H
+ 391   1          rs485.TX2_buf[length+1] = crc>>8;                  //CRC L
+ 392   1      
+ 393   1          rs485.TX2_send_bytelength = length + 2;
+ 394   1      
+ 395   1          DR2 = 1;                                        //485可以发送
+ 396   1          delay_ms(2);
+ 397   1          S2CON |= S2TI;                                  //开始发送
+ 398   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1680    ----
-   CONSTANT SIZE    =     18    ----
-   XDATA SIZE       =      7      13
+   CODE SIZE        =   1300    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      7       5
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

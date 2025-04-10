@@ -1,11 +1,11 @@
-C51 COMPILER V9.60.7.0   POWER_CRL                                                         04/02/2025 22:31:31 PAGE 1   
+C51 COMPILER V9.60.7.0   POWER_CRL                                                         04/10/2025 14:41:52 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE POWER_CRL
 OBJECT MODULE PLACED IN ..\Output\power_crl.obj
-COMPILER INVOKED BY: D:\APP\Keil_STM32\C51\BIN\C51.EXE ..\BSP\Src\power_crl.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\B
-                    -SP\Inc;..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\power_crl.lst) OBJECT(..\
-                    -Output\power_crl.obj)
+COMPILER INVOKED BY: D:\APP\Keil_v5\C51\BIN\C51.EXE ..\BSP\Src\power_crl.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\BSP\
+                    -Inc;..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\power_crl.lst) OBJECT(..\Out
+                    -put\power_crl.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   51   2              ac_220.zero_flag = 0;
   52   2              AC_Out4 = 0;
   53   2      
-C51 COMPILER V9.60.7.0   POWER_CRL                                                         04/02/2025 22:31:31 PAGE 2   
+C51 COMPILER V9.60.7.0   POWER_CRL                                                         04/10/2025 14:41:52 PAGE 2   
 
   54   2               /* 2, 设置下一次Timer1中断触发所需时间，即脉冲时间       */
   55   2              TL1 = 0xF7;                             
@@ -94,21 +94,22 @@ line level    source
   80          /**
   81           * @brief       24V LED开关控制函数
   82           *
-  83           * @param   on_off：0：关闭 1：开启
-  84           *
-  85           * @return  void
-  86          **/
-  87          void DC_24V_out( uint8_t on_off )
-  88          {
-  89   1          if( on_off == 1 )
-  90   1          {
-  91   2              DC_24V = 0;
-  92   2          }else
-  93   1          {
-  94   2              DC_24V = 1;
-  95   2          }
-  96   1      }
-  97          
+  83           *  
+  84           * @param   on_off：0：关闭 1：开启
+  85           *
+  86           * @return  void
+  87          **/
+  88          void DC_24V_out( uint8_t on_off )
+  89          {
+  90   1          if( on_off == 1 )
+  91   1          {
+  92   2              DC_24V = 0;
+  93   2          }else
+  94   1          {
+  95   2              DC_24V = 1;
+  96   2          }
+  97   1      }
+  98          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

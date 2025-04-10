@@ -1,11 +1,10 @@
-C51 COMPILER V9.60.7.0   NTC                                                               04/02/2025 22:31:31 PAGE 1   
+C51 COMPILER V9.60.7.0   NTC                                                               04/10/2025 14:41:52 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE NTC
 OBJECT MODULE PLACED IN ..\Output\ntc.obj
-COMPILER INVOKED BY: D:\APP\Keil_STM32\C51\BIN\C51.EXE ..\BSP\Src\ntc.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\BSP\Inc
-                    -;..\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\ntc.lst) OBJECT(..\Output\ntc.o
-                    -bj)
+COMPILER INVOKED BY: D:\APP\Keil_v5\C51\BIN\C51.EXE ..\BSP\Src\ntc.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\BSP\Inc;..
+                    -\Core\Inc;..\Driver;..\Emembed\Inc;..\SYSTEM\Inc) DEBUG OBJECTEXTEND PRINT(.\Listings\ntc.lst) OBJECT(..\Output\ntc.obj)
 
 line level    source
 
@@ -62,9 +61,9 @@ line level    source
   51   1                      for( i = 0; i < (tab_num-1); i++ )
   52   1                      {
   53   2                                      if(( adc_val >= temp_tab[i] ) && ( adc_val < temp_tab[i+1]) )
-C51 COMPILER V9.60.7.0   NTC                                                               04/02/2025 22:31:31 PAGE 2   
-
   54   2                                      temp_val = i;   
+C51 COMPILER V9.60.7.0   NTC                                                               04/10/2025 14:41:52 PAGE 2   
+
   55   2                      }
   56   1                      return temp_val;
   57   1      }
@@ -112,61 +111,66 @@ line level    source
   99   2              temp.temp_value1 =  get_temp(NTC_1);
  100   2              temp.temp_value2 =  get_temp(NTC_2);
  101   2              temp.temp_value3 =  get_temp(NTC_3);
- 102   2      
- 103   2              if( ac_220.ac220_out1_flag == 1 )
- 104   2              {
- 105   3                  if( temp.temp_value1 >= temp.temp_alarm_value1 ) 
- 106   3                  {
- 107   4                      AC_Out1 = 1;        //001
- 108   4                  }
- 109   3                  if( temp.temp_value1 < temp.temp_alarm_value1 - 1)
- 110   3                  {
- 111   4                      AC_Out1 = 0;
- 112   4                  }
- 113   3              }else
- 114   2              {
- 115   3                  AC_Out1 = 1;
-C51 COMPILER V9.60.7.0   NTC                                                               04/02/2025 22:31:31 PAGE 3   
+ 102   2              // printf("ntc1 temp value is %d \r\n",(int)temp.temp_value1);
+ 103   2              // printf("ntc2 temp value is %d \r\n",(int)temp.temp_value2);
+ 104   2              // printf("ntc3 temp value is %d \r\n",(int)temp.temp_value3);
+ 105   2              // printf("ntc1 temp_alarm_value1 value is %d \r\n",(int)temp.temp_alarm_value1);
+ 106   2              // printf("ntc2 temp_alarm_value2 value is %d \r\n",(int)temp.temp_alarm_value2);
+ 107   2              // printf("ntc3 temp_alarm_value3 value is %d \r\n",(int)temp.temp_alarm_value3);
+ 108   2              if( ac_220.ac220_out1_flag == 1 )
+ 109   2              {
+ 110   3                  if( temp.temp_value3 >= temp.temp_alarm_value1 ) 
+ 111   3                  {
+ 112   4                      AC_Out1 = 1;        //001
+ 113   4                  }
+ 114   3                  else if( temp.temp_value3 < (temp.temp_alarm_value1 - 1))
+ 115   3                  {
+ 116   4                      AC_Out1 = 0;
+C51 COMPILER V9.60.7.0   NTC                                                               04/10/2025 14:41:52 PAGE 3   
 
- 116   3              }
- 117   2      
- 118   2              if( ac_220.ac220_out2_flag == 1 )
+ 117   4                  }
+ 118   3              }else
  119   2              {
- 120   3                  if( temp.temp_value2 >= temp.temp_alarm_value2 ) 
- 121   3                  {
- 122   4                      AC_Out2 = 1;        //001
- 123   4                  }
- 124   3                  if( temp.temp_value2 < temp.temp_alarm_value2 - 1)
- 125   3                  {
- 126   4                      AC_Out2 = 0;
- 127   4                  }
- 128   3              }else
- 129   2              {
- 130   3                  AC_Out2 = 1;
- 131   3              }
- 132   2      
- 133   2              if( ac_220.ac220_out3_flag == 1 )
+ 120   3                  AC_Out1 = 1;
+ 121   3              }
+ 122   2      
+ 123   2              if( ac_220.ac220_out2_flag == 1 )
+ 124   2              {
+ 125   3                  if( temp.temp_value2 >= temp.temp_alarm_value2 ) 
+ 126   3                  {
+ 127   4                      AC_Out2 = 1;        //001
+ 128   4                  }
+ 129   3                  else if( temp.temp_value2 < (temp.temp_alarm_value2 - 1))
+ 130   3                  {
+ 131   4                      AC_Out2 = 0;
+ 132   4                  }
+ 133   3              }else
  134   2              {
- 135   3                  if( temp.temp_value3 >= temp.temp_alarm_value3 ) 
- 136   3                  {
- 137   4                      AC_Out3 = 1;        //001
- 138   4                  }
- 139   3                  if( temp.temp_value3 < temp.temp_alarm_value3 - 1)
- 140   3                  {
- 141   4                      AC_Out3 = 0;
- 142   4                  }
- 143   3              }else
- 144   2              {
- 145   3                  AC_Out3 = 1; 
- 146   3              }
- 147   2      
- 148   2              temp.temp_scan_flag = 0;
- 149   2          }
- 150   1      }
+ 135   3                  AC_Out2 = 1;
+ 136   3              }
+ 137   2      
+ 138   2              if( ac_220.ac220_out3_flag == 1 )
+ 139   2              {
+ 140   3                  if( temp.temp_value1 >= temp.temp_alarm_value3 ) 
+ 141   3                  {
+ 142   4                      AC_Out3 = 1;        //001
+ 143   4                  }
+ 144   3                  else if( temp.temp_value1 < (temp.temp_alarm_value3 - 1))
+ 145   3                  {
+ 146   4                      AC_Out3 = 0;
+ 147   4                  }
+ 148   3              }else
+ 149   2              {
+ 150   3                  AC_Out3 = 1; 
+ 151   3              }
+ 152   2      
+ 153   2              temp.temp_scan_flag = 0;
+ 154   2          }
+ 155   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    394    ----
+   CODE SIZE        =    400    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =    260      13
    PDATA SIZE       =   ----    ----
