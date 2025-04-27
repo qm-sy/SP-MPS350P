@@ -140,7 +140,7 @@ LINK MAP OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
             CODE    17A6H     001EH     UNIT         ?PR?_ISP_EARSE?EEPROM
             CODE    17C4H     001AH     UNIT         ?PR?ADC_INIT?ADC
             CODE    17DEH     0016H     UNIT         ?PR?UART3_INIT?UART
-            CODE    17F4H     0014H     UNIT         ?PR?_AC_220V_OUT?POWER_CRL
+            CODE    17F4H     0014H     UNIT         ?PR?_ac_220v_crl?POWER_CRL
             CODE    1808H     0013H     UNIT         ?PR?TIMER0_INIT?TIM
             CODE    181BH     0013H     UNIT         ?PR?UART2_INIT?UART
             CODE    182EH     0010H     UNIT         ?PR?TIMER4_INIT?TIM
@@ -210,7 +210,7 @@ SEGMENT                                            BIT_GROUP          DATA_GROUP
 ?PR?EEPROM_DATA_INIT?EEPROM_CRL                 -----    -----      -----    -----      -----    -----
   +--> ?PR?_ISP_READ?EEPROM
   +--> ?PR?_DC_24V_OUT?POWER_CRL
-  +--> ?PR?_AC_220V_OUT?POWER_CRL
+  +--> ?PR?_ac_220v_crl?POWER_CRL
 
 ?PR?PRINTF?PRINTF                               0020H.0  0001H.1    0008H    0005H      020EH    0028H
   +--> ?PR?_PUTCHAR?COMMUNICATION
@@ -251,12 +251,12 @@ SEGMENT                                            BIT_GROUP          DATA_GROUP
 ?PR?MODBUS_FUN6?MODBUS_RTU                      -----    -----      -----    -----      -----    -----
   +--> ?PR?_DELAY_MS?DELAY
   +--> ?PR?_DC_24V_OUT?POWER_CRL
-  +--> ?PR?_AC_220V_OUT?POWER_CRL
+  +--> ?PR?_ac_220v_crl?POWER_CRL
   +--> ?PR?EEPROM_DATA_RECORD?EEPROM_CRL
 
 ?PR?MODBUS_FUN16?MODBUS_RTU                     -----    -----      -----    -----      020EH    0002H
   +--> ?PR?_DC_24V_OUT?POWER_CRL
-  +--> ?PR?_AC_220V_OUT?POWER_CRL
+  +--> ?PR?_ac_220v_crl?POWER_CRL
   +--> ?PR?_MODBUS_CRC16?MODBUS_RTU
   +--> ?PR?_DELAY_MS?DELAY
   +--> ?PR?EEPROM_DATA_RECORD?EEPROM_CRL
@@ -879,7 +879,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   D:00C8H         PUBLIC        P5
   D:00E8H         PUBLIC        P6
   D:00F8H         PUBLIC        P7
-  C:17F4H         PUBLIC        _AC_220V_out
+  C:17F4H         PUBLIC        _ac_220v_crl
   D:00A8H         PUBLIC        IE
   D:00B8H         PUBLIC        IP
   B:00A0H.1       PUBLIC        DC_24V
@@ -934,13 +934,13 @@ SYMBOL TABLE OF MODULE:  ..\Output\KP_MultiFunPower_V001 (?C_STARTUP)
   C:1666H         LINE#         64
   C:1666H         LINE#         65
   -------         ENDPROC       TIM1_ISR
-  -------         PROC          _AC_220V_OUT
+  -------         PROC          _ac_220v_crl
   D:0007H         SYMBOL        power_level
   C:17F4H         LINE#         74
   C:17F4H         LINE#         75
   C:17F4H         LINE#         76
   C:1807H         LINE#         77
-  -------         ENDPROC       _AC_220V_OUT
+  -------         ENDPROC       _ac_220v_crl
   -------         PROC          _DC_24V_OUT
   D:0007H         SYMBOL        on_off
   C:1853H         LINE#         86

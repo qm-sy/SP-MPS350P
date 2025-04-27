@@ -6,7 +6,7 @@
 sbit I_Out1    = P0^2;
 sbit I_Out2    = P0^3;
 sbit I_Out3    = P0^4;
-sbit A1_DHT11     = P0^5;
+sbit Temp_Hum  = P0^5;
 sbit A2        = P0^6;
 
 sbit RX2       = P1^0;

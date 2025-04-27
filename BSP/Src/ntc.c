@@ -99,6 +99,11 @@ void temp_scan( void )
         temp.temp_value1 =  get_temp(NTC_1);
         temp.temp_value2 =  get_temp(NTC_2);
         temp.temp_value3 =  get_temp(NTC_3);
+        current.current1 =  get_current(I_OUT1);
+        current.current2 =  get_current(I_OUT2);
+        current.current3 =  get_current(I_OUT3);
+
+        Read_DHT11();
 
         if( temp.temp_scan_allow_flag == 1)
         {

@@ -7,19 +7,23 @@
 #include "ntc.h"
 #include "stdio.h"
 
-#define PWM_ADDR_EEPROM       0x0000
-#define LED_ADDR_EEPROM       0x0001
-#define AC220_ADDR_EEPROM     0x0002
-#define TEMP_ALARM1           0X0003
-#define TEMP_ALARM2           0X0004
-#define TEMP_ALARM3           0X0005
+#define FAN_ADDR              0x0000
+#define LED_ADDR              0x0001
+#define AC_SWITCH_ADDR        0x0002
+#define BAKE_POWER_ADDR       0x0003
+#define BAKE_FAN_ADDR         0x0004
+#define TEMP_ALARM1           0X0005
+#define TEMP_ALARM2           0X0006
+#define TEMP_ALARM3           0X0007
 #define EEPROM_STATU_JUDGE    0X0010         
 
 typedef struct 
 {
-    uint8_t  pwm_info;
-    uint8_t  led_info;         
-    uint8_t  ac220_info;        
+    uint8_t  fan_info;
+    uint8_t  led_switch;         
+    uint8_t  ac220_switch;   
+    uint8_t  bake_power_level;
+    uint8_t  bake_fan_level;
     uint8_t  temp_alarm_value1;        
     uint8_t  temp_alarm_value2;         
     uint8_t  temp_alarm_value3;       

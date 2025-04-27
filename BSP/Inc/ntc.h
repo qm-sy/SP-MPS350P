@@ -5,6 +5,8 @@
 #include "adc.h"
 #include "power_crl.h"
 #include "stdio.h"
+#include "dht11.h"
+#include "cc6903.h"
 
 #define NTC_1        4
 #define NTC_2        5

@@ -124,7 +124,7 @@ LINK MAP OF MODULE:  ..\Output\Power_board_350 (?C_STARTUP)
 
             CODE    13AFH     001AH     UNIT         ?PR?ADC_INIT?ADC
             CODE    13C9H     0019H     UNIT         ?PR?UART4_INIT?UART
-            CODE    13E2H     0014H     UNIT         ?PR?_AC_220V_OUT?POWER_CRL
+            CODE    13E2H     0014H     UNIT         ?PR?_ac_220v_crl?POWER_CRL
             CODE    13F6H     0013H     UNIT         ?PR?TIMER0_INIT?TIM
             CODE    1409H     0013H     UNIT         ?PR?UART2_INIT?UART
             CODE    141CH     0010H     UNIT         ?PR?TIMER3_INIT?TIM
@@ -199,7 +199,7 @@ SEGMENT                                            BIT_GROUP          DATA_GROUP
 ?PR?EEPROM_DATA_INIT?EEPROM_CRL                 -----    -----      -----    -----      -----    -----
   +--> ?PR?_ISP_READ?EEPROM
   +--> ?PR?_DC_24V_OUT?POWER_CRL
-  +--> ?PR?_AC_220V_OUT?POWER_CRL
+  +--> ?PR?_ac_220v_crl?POWER_CRL
 
 ?PR?MODBUS_EVENT?MODBUS_RTU                     -----    -----      -----    -----      -----    -----
   +--> ?PR?_MODBUS_CRC16?MODBUS_RTU
@@ -234,7 +234,7 @@ SEGMENT                                            BIT_GROUP          DATA_GROUP
 
 ?PR?MODBUS_FUN6?MODBUS_RTU                      -----    -----      -----    -----      -----    -----
   +--> ?PR?_DC_24V_OUT?POWER_CRL
-  +--> ?PR?_AC_220V_OUT?POWER_CRL
+  +--> ?PR?_ac_220v_crl?POWER_CRL
   +--> ?PR?EEPROM_DATA_RECORD?EEPROM_CRL
 
 ?PR?MODBUS_FUN16?MODBUS_RTU                     -----    -----      -----    -----      -----    -----
@@ -835,7 +835,7 @@ SYMBOL TABLE OF MODULE:  ..\Output\Power_board_350 (?C_STARTUP)
   D:00C8H         PUBLIC        P5
   D:00E8H         PUBLIC        P6
   D:00F8H         PUBLIC        P7
-  C:13E2H         PUBLIC        _AC_220V_out
+  C:13E2H         PUBLIC        _ac_220v_crl
   D:00A8H         PUBLIC        IE
   D:00B8H         PUBLIC        IP
   B:00A0H.1       PUBLIC        DC_24V
@@ -886,13 +886,13 @@ SYMBOL TABLE OF MODULE:  ..\Output\Power_board_350 (?C_STARTUP)
   C:1289H         LINE#         63
   C:1289H         LINE#         64
   -------         ENDPROC       TIM1_ISR
-  -------         PROC          _AC_220V_OUT
+  -------         PROC          _ac_220v_crl
   D:0007H         SYMBOL        power_level
   C:13E2H         LINE#         73
   C:13E2H         LINE#         74
   C:13E2H         LINE#         75
   C:13F5H         LINE#         76
-  -------         ENDPROC       _AC_220V_OUT
+  -------         ENDPROC       _ac_220v_crl
   -------         PROC          _DC_24V_OUT
   D:0007H         SYMBOL        on_off
   C:1441H         LINE#         85

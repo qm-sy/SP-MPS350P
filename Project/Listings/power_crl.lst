@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   POWER_CRL                                                         04/11/2025 10:54:30 PAGE 1   
+C51 COMPILER V9.60.7.0   POWER_CRL                                                         04/27/2025 16:58:32 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE POWER_CRL
@@ -23,11 +23,11 @@ line level    source
   12          void Power_Statu_Init( void )
   13          {
   14   1          ac_220.zero_flag  = 0;
-  15   1          AC_Out1 = AC_Out2 = AC_Out3 = 1;
+  15   1          AC_Out1 = AC_Out2 = AC_Out3 = AC_Out4 = 1;
   16   1      }
   17          
   18          /**
-  19           * @brief       外部中断0中断处理函数
+  19           * @brief       外部中断2中断处理函数
   20           *
   21           * @param   
   22           *
@@ -62,7 +62,7 @@ line level    source
   51   2              AC_Out4 = 0;
   52   2      
   53   2               /* 2, 设置下一次Timer1中断触发所需时间，即脉冲时间       */
-C51 COMPILER V9.60.7.0   POWER_CRL                                                         04/11/2025 10:54:30 PAGE 2   
+C51 COMPILER V9.60.7.0   POWER_CRL                                                         04/27/2025 16:58:32 PAGE 2   
 
   54   2              TL1 = 0xF7;                             
   55   2              TH1 = 0xFF;                             
@@ -85,9 +85,9 @@ line level    source
   71           *
   72           * @return  void
   73          **/
-  74          void AC_220V_out( uint8_t power_level )
+  74          void ac_220v_crl( uint8_t power_level )
   75          {
-  76   1          ac_220.time_delay = 58000 + 75*power_level;
+  76   1          ac_220.time_delay = 56500 + 90*power_level;
   77   1      }
   78          
   79          /**
@@ -99,7 +99,7 @@ line level    source
   85          **/
   86          void DC_24V_out( uint8_t on_off )
   87          {
-  88   1          if( on_off == 1 )
+  88   1          if( on_off == LED_ON )
   89   1          {
   90   2              DC_24V = 0;
   91   2          }else
@@ -111,9 +111,9 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    130    ----
+   CODE SIZE        =    132    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =      4    ----
+   XDATA SIZE       =      5    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

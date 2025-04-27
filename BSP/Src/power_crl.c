@@ -12,11 +12,11 @@ AC_220 ac_220;
 void Power_Statu_Init( void )
 {
     ac_220.zero_flag  = 0;
-    AC_Out1 = AC_Out2 = AC_Out3 = 1;
+    AC_Out1 = AC_Out2 = AC_Out3 = AC_Out4 = 1;
 }
 
 /**
- * @brief	外部中断0中断处理函数
+ * @brief	外部中断2中断处理函数
  *
  * @param   
  *
@@ -71,9 +71,9 @@ void Tim1_ISR( void ) interrupt 3   //1ms
  *
  * @return  void
 **/
-void AC_220V_out( uint8_t power_level )
+void ac_220v_crl( uint8_t power_level )
 {
-    ac_220.time_delay = 58000 + 75*power_level;
+    ac_220.time_delay = 56500 + 90*power_level;
 }
 
 /**
@@ -85,7 +85,7 @@ void AC_220V_out( uint8_t power_level )
 **/
 void DC_24V_out( uint8_t on_off )
 {
-    if( on_off == 1 )
+    if( on_off == LED_ON )
     {
         DC_24V = 0;
     }else

@@ -16,5 +16,6 @@
 #include "pwm.h"
 #include "eeprom_crl.h"
 #include "dht11.h"
+#include "cc6903.h"
 
 #endif

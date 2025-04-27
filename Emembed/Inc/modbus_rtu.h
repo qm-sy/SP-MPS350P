@@ -7,6 +7,7 @@
 #include "power_crl.h"
 #include "cc6903.h"
 #include "eeprom_crl.h"
+#include "dht11.h"
 
 #define MY_ADDR     0x35
 
@@ -28,7 +29,7 @@ void Modbus_Fun3( void );
 void Modbus_Fun4( void );
 void Modbus_Fun6( void );
 void Modbus_Fun16( void );
-void slave_to_master(uint8_t length);
+void slave_to_master(uint8_t code_num,uint8_t length);
 uint16_t MODBUS_CRC16(uint8_t *buf, uint8_t length);
 void slave_scan( void );
 

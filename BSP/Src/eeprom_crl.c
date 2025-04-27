@@ -17,9 +17,11 @@ void eeprom_statu_judge( void )
     //printf("The value of eeprom_statu_flag is 0x%02x \r\n",(int)eeprom_statu_flag);
     if( eeprom_statu_flag == 0xFF)
     {
-        eeprom.pwm_info          = 0x66;          //011 011 11 pwm7、8默认开，3档风速
-        eeprom.led_info          = 0x01;          //0000000 1  led默认开
-        eeprom.ac220_info        = 0xC9;          //0110010 1  220V_CH4默认开，50%功率
+        eeprom.fan_info          = 0x03;          //011 pwm7默认开3档风速
+        eeprom.led_switch        = 0x01;          //0000000 1  led默认开
+        eeprom.ac220_switch      = 0x00;          //默认关闭220V输出
+        eeprom.bake_power_level  = 0x32;          //220V_CH4默认开，50%功率
+        eeprom.bake_fan_level    = 0x03;          //011 pwm8默认开3档风速  
         eeprom.temp_alarm_value1 = 0x50;          //NTC1 alarm value 默认80℃
         eeprom.temp_alarm_value2 = 0x50;          //NTC2 alarm value 默认80℃  
         eeprom.temp_alarm_value3 = 0x50;          //NTC3 alarm value 默认80℃ 
@@ -40,21 +42,16 @@ void eeprom_data_record( void )
 {
     ISP_Earse(0x0000);
 
-    ISP_Write(PWM_ADDR_EEPROM,eeprom.pwm_info);
-    ISP_Write(LED_ADDR_EEPROM,eeprom.led_info);
-    ISP_Write(AC220_ADDR_EEPROM,eeprom.ac220_info);
+    ISP_Write(FAN_ADDR,eeprom.fan_info);
+    ISP_Write(LED_ADDR,eeprom.led_switch);
+    ISP_Write(AC_SWITCH_ADDR,eeprom.ac220_switch);
+    ISP_Write(BAKE_POWER_ADDR,eeprom.bake_power_level);
+    ISP_Write(BAKE_FAN_ADDR,eeprom.bake_fan_level);
     ISP_Write(TEMP_ALARM1,eeprom.temp_alarm_value1);
     ISP_Write(TEMP_ALARM2,eeprom.temp_alarm_value2);
     ISP_Write(TEMP_ALARM3,eeprom.temp_alarm_value3);
 
     ISP_Write(EEPROM_STATU_JUDGE,0x58);
-
-    // printf("The value of 0 is : 0x%02x \r\n",(int)eeprom.pwm_info);
-    // printf("The value of 1 is : 0x%02x \r\n",(int)eeprom.led_info);
-    // printf("The value of 2 is : 0x%02x \r\n",(int)eeprom.ac220_info);
-    // printf("The value of 3 is : 0x%02x \r\n",(int)eeprom.temp_alarm_value1);
-    // printf("The value of 4 is : 0x%02x \r\n",(int)eeprom.temp_alarm_value2);
-    // printf("The value of 5 is : 0x%02x \r\n",(int)eeprom.temp_alarm_value3);
 }
 
 /**
@@ -67,34 +64,39 @@ void eeprom_data_record( void )
 void eeprom_data_init( void )
 {
     /*    PWM7、PWM8 风速及开关状态初始化    */
-    eeprom.pwm_info = ISP_Read(PWM_ADDR_EEPROM);
-    PWMB_CCR7 = ((eeprom.pwm_info) & 0x0F)*184;
-    PWMB_CCR8 = (eeprom.pwm_info>>4)*184;
+    eeprom.fan_info = ISP_Read(FAN_ADDR);
+    PWMB_CCR7 = eeprom.fan_info *184;
 
     /*    LED开关状态初始化    */
-    eeprom.led_info = ISP_Read(LED_ADDR_EEPROM);
-    if( eeprom.led_info & 0X01 )
+    eeprom.led_switch = ISP_Read(LED_ADDR);
+    if( eeprom.led_switch & 0X01 )
     {
-        DC_24V_out(1);
+        DC_24V_out(LED_ON);
     }else
     {
-        DC_24V_out(0);
+        DC_24V_out(LED_OFF);
     }
 
     /*    220V输出开关状态初始化    */
-    eeprom.ac220_info = ISP_Read(AC220_ADDR_EEPROM);
-    if( eeprom.ac220_info & 0X01 )
+    eeprom.ac220_switch = ISP_Read(AC_SWITCH_ADDR);
+    if( eeprom.ac220_switch & 0X01 )
     {
-        INTCLKO |= 0x10;
+        INTCLKO |= 0X10;
         temp.temp_scan_allow_flag = 1;
         AC_Out1 = AC_Out2 = AC_Out3 = 0;
     }else
     {
         INTCLKO &= ~0x10;
         temp.temp_scan_allow_flag = 0;
-        AC_Out1 = AC_Out2 = AC_Out3 = 1;
+        AC_Out1 = AC_Out2 = AC_Out3 = AC_Out4 =1;
     }
-    AC_220V_out(eeprom.ac220_info>>1);
+
+    /*    220V输出开关状态初始化    */
+    eeprom.bake_fan_level   = ISP_Read(BAKE_FAN_ADDR);
+    eeprom.bake_power_level = ISP_Read(BAKE_POWER_ADDR);
+
+    PWMB_CCR8 = eeprom.bake_fan_level *184;
+    ac_220v_crl(eeprom.bake_power_level);
 
     /*    三路NTC alarm value初始化    */
     eeprom.temp_alarm_value1 = ISP_Read(TEMP_ALARM1);

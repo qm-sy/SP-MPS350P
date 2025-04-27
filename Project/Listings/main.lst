@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              04/11/2025 10:54:29 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              04/27/2025 16:58:31 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
@@ -35,37 +35,35 @@ line level    source
   24   1          Timer1_Init();
   25   1          Timer4_Init();
   26   1          
-  27   1      
-  28   1          /*  PWM控制  */
-  29   1          PWM_Init();
-  30   1      
-  31   1          EA = 1;
+  27   1          /*  电流检测控制  */
+  28   1          current_init();
+  29   1      
+  30   1          /*  PWM控制  */
+  31   1          PWM_Init();
   32   1      
-  33   1          eeprom_statu_judge();
-  34   1          A1_DHT11 = 1;
-  35   1          printf("========== code start ========== \r\n");
-  36   1          //printf("========== code start ========== \r\n");
-  37   1          
-  38   1          while (1)
-  39   1          {
-  40   2              Modbus_Event();
-  41   2              temp_scan();
-  42   2              //  DHT11_TEST();
-  43   2              // delay_ms(1000);
-  44   2              //slave_scan();
-  45   2          }  
-  46   1      }
+  33   1          EA = 1;
+  34   1      
+  35   1          eeprom_statu_judge();
+  36   1      
+  37   1          printf("========== code start ========== \r\n");
+  38   1          
+  39   1          while (1)
+  40   1          {
+  41   2              Modbus_Event();
+  42   2              temp_scan();
+  43   2          }  
+  44   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     66    ----
+   CODE SIZE        =     67    ----
    CONSTANT SIZE    =     36    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-C51 COMPILER V9.60.7.0   MAIN                                                              04/11/2025 10:54:29 PAGE 2   
-
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.7.0   MAIN                                                              04/27/2025 16:58:31 PAGE 2   
+
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 

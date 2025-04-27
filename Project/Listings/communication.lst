@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   COMMUNICATION                                                     04/11/2025 10:54:30 PAGE 1   
+C51 COMPILER V9.60.7.0   COMMUNICATION                                                     04/27/2025 16:58:32 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE COMMUNICATION
@@ -62,7 +62,7 @@ line level    source
   51   3                  DR2 = 0;
   52   3              }
   53   2          }
-C51 COMPILER V9.60.7.0   COMMUNICATION                                                     04/11/2025 10:54:30 PAGE 2   
+C51 COMPILER V9.60.7.0   COMMUNICATION                                                     04/27/2025 16:58:32 PAGE 2   
 
   54   1          
   55   1          /* 1, 检测到硬件将S2RI置1，即接收完毕                       */
@@ -126,7 +126,7 @@ line level    source
  113          {
  114   1          if (S3CON & S3TI)                //在停止位开始发送时，该位置1
  115   1          {
-C51 COMPILER V9.60.7.0   COMMUNICATION                                                     04/11/2025 10:54:30 PAGE 3   
+C51 COMPILER V9.60.7.0   COMMUNICATION                                                     04/27/2025 16:58:32 PAGE 3   
 
  116   2              S3CON &= ~S3TI;                              //清除S3CON寄存器对应S3TI位（该位必须软件清零）
  117   2              TX3_busy_Flag = 0;
@@ -190,7 +190,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =    266    ----
    PDATA SIZE       =   ----    ----
-C51 COMPILER V9.60.7.0   COMMUNICATION                                                     04/11/2025 10:54:30 PAGE 4   
+C51 COMPILER V9.60.7.0   COMMUNICATION                                                     04/27/2025 16:58:32 PAGE 4   
 
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

@@ -1,7 +1,7 @@
 #include "tim.h"
 
 /**
- * @brief	外部中断0初始化函数
+ * @brief	外部中断2初始化函数
  *
  * @param   
  *
@@ -11,7 +11,6 @@ void INT2_Init( void )
 {
     INTCLKO |= 0X10;    			//使能INT2中断
 }
-
 /**
  * @brief	Timer0初始化函数
  *
